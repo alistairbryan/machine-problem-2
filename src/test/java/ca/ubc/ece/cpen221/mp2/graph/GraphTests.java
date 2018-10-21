@@ -19,21 +19,40 @@ public class GraphTests {
     }
 
     @Test
-    public void test1() {
-        Graph listgraph = new AdjacencyListGraph();
-        listgraph.addVertex(new Vertex("APPLE"));
-        listgraph.addVertex(new Vertex("ABBLE"));
-        listgraph.addVertex(new Vertex("AB"));
-        listgraph.addVertex(new Vertex("Zope"));
-        listgraph.addVertex(new Vertex("apple"));
-        listgraph.addVertex(new Vertex("apPle"));
-        listgraph.addVertex(new Vertex("Lemon"));
+    public void test1_AdjL() {
+        List<Vertex> vertices = new ArrayList<Vertex>(Arrays.asList(new Vertex("APPLE"),
+                new Vertex("apple"), new Vertex("Zoinks"), new Vertex("aPple"),
+                new Vertex("people")));
 
-
-
-
+        Graph listgraph = new AdjacencyListGraph(vertices);
+        listgraph.addEdge(vertices.get(0), vertices.get(1));
+        listgraph.addEdge(vertices.get(1), vertices.get(2));
+        listgraph.addEdge(vertices.get(1), vertices.get(3));
 
         System.out.println(listgraph.getVertices());
+
+        System.out.println(listgraph.getNeighbors(vertices.get(0)));
+        System.out.println(listgraph.getNeighbors(vertices.get(1)));
+
+    }
+
+    @Test
+    public void test1_AdjM() {
+
+        List<Vertex> vertices = new ArrayList<Vertex>(Arrays.asList(new Vertex("APPLE"),
+                new Vertex("apple"), new Vertex("Zoinks"), new Vertex("aPple"),
+                new Vertex("people")));
+
+        Graph listgraph = new AdjacencyMatrixGraph(vertices);
+        listgraph.addEdge(vertices.get(0), vertices.get(1));
+        listgraph.addEdge(vertices.get(1), vertices.get(2));
+        listgraph.addEdge(vertices.get(1), vertices.get(3));
+
+        System.out.println("Adjacency Matrix: ");
+        System.out.println(listgraph.getVertices());
+
+        System.out.println(listgraph.getNeighbors(vertices.get(0)));
+        System.out.println(listgraph.getNeighbors(vertices.get(1)));
 
     }
 

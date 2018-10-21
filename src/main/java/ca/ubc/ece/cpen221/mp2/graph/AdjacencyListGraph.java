@@ -22,7 +22,9 @@ public class AdjacencyListGraph implements Graph, Comparator {
     public AdjacencyListGraph() { }
 
     public AdjacencyListGraph(List<Vertex> inputList) {
-
+        for (Vertex v : inputList) {
+            addVertex(v);
+        }
     }
 
     /**
@@ -103,7 +105,7 @@ public class AdjacencyListGraph implements Graph, Comparator {
         }
 
         Comparator compare = new AdjacencyListGraph();
-        returnlist.sort(compare);
+        Collections.sort(returnlist,compare);
 
         return returnlist;
     }
