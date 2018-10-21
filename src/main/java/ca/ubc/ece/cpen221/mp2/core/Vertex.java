@@ -14,6 +14,7 @@ public class Vertex {
      *
      * @param label with which to identify the vertex
      */
+
     public Vertex(String label, String content) {
         this.label = label;
         this.content = content;
