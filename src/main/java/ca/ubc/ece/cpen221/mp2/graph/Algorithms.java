@@ -28,7 +28,11 @@ public class Algorithms {
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
 		// TODO: Implement this method and others
+		Vertex abc = new Vertex("Name");
+
 		return 0;
+
+
 	}
 
 	/**
