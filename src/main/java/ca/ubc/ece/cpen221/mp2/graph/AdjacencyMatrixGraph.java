@@ -3,7 +3,10 @@ package ca.ubc.ece.cpen221.mp2.graph;
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /******************************************************************************
  *  Dependencies: Graph.java Vertex.java
@@ -14,10 +17,9 @@ import java.util.List;
 
 public class AdjacencyMatrixGraph implements Graph {
 
-    /*
-    **
-     */
-    public AdjacencyMatrixGraph()
+    private List<List<Boolean>> adjMatrix = new ArrayList<>(); //List of columns
+    private Map<Vertex, Integer> matrixIndices = new HashMap<>();
+    private int vertexCount = 0;
 
     /**
      * Adds a vertex to the graph.
