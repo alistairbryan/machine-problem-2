@@ -18,6 +18,14 @@ public class AdjacencyMatrixGraph implements Graph, Comparator{
     private Map<Vertex, Integer> matrixMap = new HashMap<>();
     private int vertexCount = 0;
 
+    public AdjacencyMatrixGraph() { }
+
+    public AdjacencyMatrixGraph(List<Vertex> inputList) {
+        for (Vertex v : inputList) {
+            addVertex(v);
+        }
+    }
+
     /**
      * Adds a vertex to the graph.
      * <p>
@@ -126,7 +134,5 @@ public class AdjacencyMatrixGraph implements Graph, Comparator{
     public int compare(Object v1, Object v2){
         return ((Vertex) v1).getLabel().compareTo(((Vertex) v2).getLabel());
     }
-
-
 
 }
