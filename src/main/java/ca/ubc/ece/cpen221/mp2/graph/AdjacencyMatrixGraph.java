@@ -121,24 +121,12 @@ public class AdjacencyMatrixGraph implements Graph, Comparator{
         return vertices;
     }
 
-    /*
+
     @Override
     public int compare(Object v1, Object v2){
         return ((Vertex) v1).getLabel().compareTo(((Vertex) v2).getLabel());
     }
 
-    /*public int compareTo(Vertex v1, Vertex v2){
-        int i = 0;
 
-        while(i < v1.getLabel().length() && i < v2.getLabel().length()){
-            if(Character.toLowerCase(v1.getLabel().charAt(i)) > Character.toLowerCase(v2.getLabel().charAt(i))){
-                return 1;
-            }else if(Character.toLowerCase(v1.getLabel().charAt(i)) < Character.toLowerCase(v2.getLabel().charAt(i))){
-                return -1;
-            }
-            i++;
-        }
-        return 0;
-    }
-    */
+
 }
