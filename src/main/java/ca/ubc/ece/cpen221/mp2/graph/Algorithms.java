@@ -4,6 +4,7 @@ import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Algorithms {
 
@@ -102,8 +103,40 @@ public class Algorithms {
 	 * @return
 	 */
 	public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
-		// TODO: Implement this method
-		return null; // this should be changed
+		Set<List<Vertex>> allResults = new HashSet<>();
+		List<Vertex> result = new ArrayList<>();
+		Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
+		List<Vertex> neighbors = new ArrayList<>();
+		Vertex workingV = new Vertex("", "" );
+		boolean foundNeighbor;
+
+		for(Vertex vStart : graph.getVertices()){
+			result.clear();
+
+			workingQueue.add(vStart);
+			result.add(vStart);
+			neighbors = graph.getNeighbors(vStart);
+
+			while(!workingQueue.isEmpty()){
+				foundNeighbor = false;
+
+				for(Vertex v : neighbors){
+					if(!result.contains(v)){
+						workingV = v;
+						foundNeighbor = true;
+						break;
+					}
+				}
+				if(!foundNeighbor){
+					neighbors = graph.getNeighbors(workingQueue.poll());
+				}else{
+					workingQueue.add(workingV);
+					result.add(workingV);
+				}
+			}
+		}
+
+		return allResults;
 	}
 
 	/**
