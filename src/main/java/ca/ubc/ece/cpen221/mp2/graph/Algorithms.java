@@ -3,6 +3,7 @@ package ca.ubc.ece.cpen221.mp2.graph;
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -28,12 +29,28 @@ public class Algorithms {
 	 * @return
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
-		// TODO: Implement this method and others
-		Vertex abc = new Vertex("Name");
+		Map<Vertex,Integer> distances = new HashMap<>();
+		Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
+		Vertex workingVertex = a;
 
-		return 0;
+		for(Vertex v : graph.getVertices()){
+			distances.put(v, -1);
+		}
+		distances.put(a, 0);
 
+		workingQueue.add(a);
+		while(!workingQueue.isEmpty() && !workingVertex.equals(b)) {
+			for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
+				if(distances.get(neighbor) == -1){
+					distances.put(neighbor, 2 + distances.get(workingVertex));
+					workingQueue.add(neighbor);
+				}
+			}
 
+			workingVertex = workingQueue.poll();
+		}
+
+		return distances.get(b);
 	}
 
 	/**
@@ -54,33 +71,25 @@ public class Algorithms {
 		List<Vertex> result = new ArrayList<>();
 		Stack<Vertex> workingStack = new Stack<>();
 		List<Vertex> neighbors = new ArrayList<>();
-		Vertex workingV = new Vertex("", "");
-		boolean foundNeighbour;
+		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){ //Starts at every vertex on the graph.
 			result.clear();
 
 			result.add(vStart);
 			workingStack.push(vStart);
-			neighbors = graph.getNeighbors(vStart);
+			workingVertex = vStart;
 
-			while(!workingStack.empty()){
-				foundNeighbour = false;
-				for(Vertex v : neighbors){
-					if(!result.contains(v)){
-						workingV = v;
-						foundNeighbour = true;
+			while(!workingStack.isEmpty()){
+				for(Vertex neighbor : graph.getNeighbors(workingVertex)){
+					if(!result.contains(neighbor)){
+						result.add(neighbor);
+						workingStack.push(neighbor);
 						break;
 					}
 				}
-				if(!foundNeighbour){
-					neighbors = graph.getNeighbors(workingStack.pop());
 
-				}else {
-					workingStack.push(workingV);
-					result.add(workingV);
-					neighbors = graph.getNeighbors(workingV);
-				}
+				workingVertex = workingStack.pop();
 			}
 			allResults.add(result);
 		}
@@ -106,33 +115,25 @@ public class Algorithms {
 		Set<List<Vertex>> allResults = new HashSet<>();
 		List<Vertex> result = new ArrayList<>();
 		Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
-		List<Vertex> neighbors = new ArrayList<>();
-		Vertex workingV = new Vertex("", "" );
-		boolean foundNeighbor;
+		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){
 			result.clear();
 
 			workingQueue.add(vStart);
 			result.add(vStart);
-			neighbors = graph.getNeighbors(vStart);
+			workingVertex = vStart;
+			workingQueue.add(workingVertex);
 
 			while(!workingQueue.isEmpty()){
-				foundNeighbor = false;
 
-				for(Vertex v : neighbors){
-					if(!result.contains(v)){
-						workingV = v;
-						foundNeighbor = true;
-						break;
+				for(Vertex neighbor : graph.getNeighbors(workingVertex)){
+					if(!result.contains(neighbor)){
+						result.add(neighbor);
+						workingQueue.add(neighbor);
 					}
 				}
-				if(!foundNeighbor){
-					neighbors = graph.getNeighbors(workingQueue.poll());
-				}else{
-					workingQueue.add(workingV);
-					result.add(workingV);
-				}
+				workingVertex = workingQueue.poll();
 			}
 		}
 
