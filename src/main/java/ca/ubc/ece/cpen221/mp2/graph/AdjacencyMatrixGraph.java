@@ -35,6 +35,7 @@ public class AdjacencyMatrixGraph implements Graph, Comparator{
     public void addVertex(Vertex v){
         matrixMap.put(v, vertexCount);
         List<Boolean> vList = new ArrayList<>();
+        vertexCount++;
 
         for(List<Boolean> row : adjMatrix){
             row.add(false);

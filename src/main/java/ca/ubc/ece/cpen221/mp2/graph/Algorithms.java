@@ -2,8 +2,8 @@ package ca.ubc.ece.cpen221.mp2.graph;
 
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 public class Algorithms {
 
@@ -49,8 +49,42 @@ public class Algorithms {
 	 * @return
 	 */
 	public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
-		// TODO: Implement this method
-		return null; // this should be changed
+		Set<List<Vertex>> allResults = new HashSet<>();
+		List<Vertex> result = new ArrayList<>();
+		Stack<Vertex> workingStack = new Stack<>();
+		List<Vertex> neighbors = new ArrayList<>();
+		Vertex workingV = new Vertex("", "");
+		boolean foundNeighbour;
+
+		for(Vertex vStart : graph.getVertices()){ //Starts at every vertex on the graph.
+			result.clear();
+
+			result.add(vStart);
+			workingStack.push(vStart);
+			neighbors = graph.getNeighbors(vStart);
+
+			while(!workingStack.empty()){
+				foundNeighbour = false;
+				for(Vertex v : neighbors){
+					if(!result.contains(v)){
+						workingV = v;
+						foundNeighbour = true;
+						break;
+					}
+				}
+				if(!foundNeighbour){
+					neighbors = graph.getNeighbors(workingStack.pop());
+
+				}else {
+					workingStack.push(workingV);
+					result.add(workingV);
+					neighbors = graph.getNeighbors(workingV);
+				}
+			}
+			allResults.add(result);
+		}
+
+		return allResults;
 
 	}
 
