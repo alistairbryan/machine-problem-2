@@ -14,7 +14,6 @@ public class Vertex {
      *
      * @param label with which to identify the vertex
      */
-
     public Vertex(String label, String content) {
         this.label = label;
         this.content = content;
@@ -47,6 +46,25 @@ public class Vertex {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    /**
+     * Obtain the content associated with a vertex
+     *
+     * @return content associated with this vertex
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * Set the content associated with this vertex
+     *
+     * @param content to be used to set the content associated with the vertex
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 
     /**
      * Check equality of vertices. This method overrides equals( ) in Object.

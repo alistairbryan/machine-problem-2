@@ -6,11 +6,7 @@ import ca.ubc.ece.cpen221.mp2.core.Vertex;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.*;
-
-
-import static org.junit.Assert.*;
 
 public class GraphTests {
     @BeforeClass
@@ -58,12 +54,22 @@ public class GraphTests {
 
     @Test
     public void scannertest() {
-        Graph testgraph = new AdjacencyListGraph();
-        GraphCreator.boggleGraph("datasets/board-quinquevalencies.txt", testgraph);
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Parser.boggleGraph_text("datasets/board-q.txt", testgraph);
         System.out.println(testgraph.getVertices());
         for (Vertex vertex : testgraph.getVertices()) {
             System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
         }
+    }
+
+    @Test
+    public void locationtest() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Parser.boggleGraph_text("datasets/marvel.txt", testgraph);
+        System.out.println(testgraph.getVertices());
+        /*for (Vertex vertex : testgraph.getVertices()) {
+            System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
+        }*/
     }
 
 

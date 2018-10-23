@@ -979,9 +979,20 @@ public class BoggleGUI extends JFrame {
         private void dfs(String s, int curChar, int pathIndex, int i, int j) {
             // if the word has already been found
             // if (foundWord) return;
-            // out of bounds
-            if (i < 0 || j < 0 || i >= BOARD_ROWS || j >= BOARD_COLS) {
-                return;
+            // out of bounds, wrap around
+            if (i < 0) {
+                i = BOARD_ROWS - i;
+            } else {
+                if (i > BOARD_ROWS) {
+                    i = i % BOARD_ROWS;
+                }
+            }
+            if (j < 0) {
+                j = BOARD_COLS - j;
+            } else {
+                if (j > BOARD_COLS) {
+                    j = j % BOARD_COLS;
+                }
             }
             // return if entire word is found
             if (curChar >= s.length()) {
