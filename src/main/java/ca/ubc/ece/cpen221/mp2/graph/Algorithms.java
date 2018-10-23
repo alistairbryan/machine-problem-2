@@ -144,16 +144,50 @@ public class Algorithms {
 	 * You should write the spec for this method
 	 */
 	 public static Vertex center(Graph graph) {
-		 // TODO: Implement this method
-		 return null; // this should be changed
+		 int thisMaxDistance = -1;
+		 int bestMaxDistance = -1;
+		 int testDistance;
+		 Vertex center = null;
+		 List<Vertex> vertices = graph.getVertices();
+
+		 for(int i = 0; i < vertices.size(); i++){
+		 	for(int j = 0; j < vertices.size(); j++){
+		 		if(i != j){
+		 			testDistance = shortestDistance(graph, vertices.get(i), vertices.get(j));
+		 			if(thisMaxDistance < testDistance){
+		 				thisMaxDistance = testDistance;
+					}
+				}
+			}
+			if(thisMaxDistance < bestMaxDistance){
+				bestMaxDistance = thisMaxDistance;
+				center = vertices.get(i);
+			}
+		 }
+		 return center;
 	 }
 
 	 /**
 	  * You should write the spec for this method
 		*/
 		public static int diameter(Graph graph) {
-			// TODO: Implement this method
-			return -1; // this should be changed
+			int thisMaxDistance = -1;
+			int bestMaxDistance = -1;
+			int testDistance;
+			List<Vertex> vertices = graph.getVertices();
+
+			for(int i = 0; i < vertices.size() - 1; i++){
+				for(int j = i+1; j < vertices.size(); j++){
+					testDistance = shortestDistance(graph, vertices.get(i), vertices.get(j));
+					if(thisMaxDistance < testDistance){
+						thisMaxDistance = testDistance;
+						}
+					}
+				if(thisMaxDistance < bestMaxDistance){
+					bestMaxDistance = thisMaxDistance;
+				}
+			}
+			return bestMaxDistance;
 		}
 
 }
