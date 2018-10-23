@@ -56,5 +56,15 @@ public class GraphTests {
 
     }
 
+    @Test
+    public void scannertest() {
+        Graph testgraph = new AdjacencyListGraph();
+        GraphCreator.boggleGraph("datasets/board-quinquevalencies.txt", testgraph);
+        System.out.println(testgraph.getVertices());
+        for (Vertex vertex : testgraph.getVertices()) {
+            System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
+        }
+    }
+
 
 }
