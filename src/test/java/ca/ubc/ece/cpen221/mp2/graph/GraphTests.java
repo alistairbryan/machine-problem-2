@@ -1,5 +1,6 @@
 package ca.ubc.ece.cpen221.mp2.graph;
 
+import ca.ubc.ece.cpen221.mp2.boggle.BoggleBoard;
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
@@ -55,17 +56,29 @@ public class GraphTests {
     @Test
     public void scannertest() {
         Graph testgraph = new AdjacencyMatrixGraph();
-        Parser.boggleGraph_text("datasets/board-q.txt", testgraph);
-        System.out.println(testgraph.getVertices());
+        BoggleBoard board = new BoggleBoard("datasets/board-q.txt");
+        Permeate.boggleGraph(board, testgraph);
+        /*System.out.println(testgraph.getVertices());
         for (Vertex vertex : testgraph.getVertices()) {
             System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
-        }
+        }*/
+    }
+
+    @Test
+    public void scannertest2() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        BoggleBoard board = new BoggleBoard(20,20);
+        Permeate.boggleGraph(board, testgraph);
+        /*System.out.println(testgraph.getVertices());
+        for (Vertex vertex : testgraph.getVertices()) {
+            System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
+        }*/
     }
 
     @Test
     public void locationtest() {
         Graph testgraph = new AdjacencyMatrixGraph();
-        Parser.boggleGraph_text("datasets/marvel.txt", testgraph);
+        Permeate.marvelList("datasets/marvel.txt", testgraph);
         System.out.println(testgraph.getVertices());
         /*for (Vertex vertex : testgraph.getVertices()) {
             System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
