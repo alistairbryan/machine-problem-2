@@ -26,8 +26,8 @@ public class Algorithms {
 	 * @param graph, an undirected and unweighted object that implementats graph. Must contain
 	 * @param a, a Vertex that must be in graph.
 	 * @param b, a Vertex that must be in graph.
-	 * @return the shortest distance between a and b, taking each edge to be length 1.
-	 * @throws IllegalArgumentException if there is no path from a to b.
+	 * @return the shortest distance between a and b, taking each edge to be length 1,
+	 *         -1 if there is no path between a and b.
 	 * @throws IllegalArgumentException if a or b are not in graph
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
@@ -37,7 +37,7 @@ public class Algorithms {
 		List<Vertex> vertices = new ArrayList<>();
 		boolean bFound = false;
 
-		if (!vertices.contains(a) || !vertices.contains(b)) {
+		if (!graph.getVertices().contains(a) || !graph.getVertices().contains(b)) {
 			throw new IllegalArgumentException("One or more vertices not in graph.");
 		}
 
@@ -71,7 +71,7 @@ public class Algorithms {
 		}
 
 		if (!bFound) {
-			throw new IllegalArgumentException("No path between a and b");
+			return -1;
 		}
 	return distances.get(b);
 	}

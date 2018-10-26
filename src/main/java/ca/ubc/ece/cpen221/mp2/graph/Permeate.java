@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Permeate {
+    // Fills graphs with what they need to be filled with.
 
     public static void boggleGraph(BoggleBoard board, Graph graph) {
         int rows = board.rows();
@@ -37,25 +38,34 @@ public class Permeate {
 
     }
 
-
     public static void marvelList(String filename, Graph graph) {
         try {
-            Scanner dataset = new Scanner(new File(filename)); /* should add each vertex, individually,
-                    but also create edges based on the comic book addy. Use hash map with arraylist value for this */
+            Scanner dataset = new Scanner(new File(filename));
 
-            Map<String, List<Vertex>> charsInBook = new HashMap<String, List<Vertex>>();
-            Map<String, Vertex> vertices = new HashMap<String, Vertex>();
+            Map<String, Set<Vertex>> bookChars = new HashMap<String, Set<Vertex>>();
+            Set<Vertex> vertices = new HashSet<Vertex>();
 
             int i = 0;
-            while (dataset.hasNextLine() && i < 10) {
+            while (dataset.hasNextLine() /*&& i < 20*/) {
                 String line = dataset.nextLine();
                 String[] lineChBook = line.split("\t"); // where 0 is character, 1 is book
 
-                Vertex vertex;
-                if (vertices.containsKey(lineChBook[0])) {
-                    vertex = vertices.get(lineChBook[0]);
+                Vertex vertex = new Vertex(lineChBook[0]);
+
+                if (!vertices.contains(vertex)) {
+                    vertices.add(vertex);
+                    graph.addVertex(vertex);
+                }
+
+                if (!bookChars.containsKey(lineChBook[1])) {
+                    bookChars.put(lineChBook[1], new HashSet<Vertex>(Arrays.asList(vertex)));
                 } else {
-                    vertex = new Vertex(lineChBook[0]);
+                    Set<Vertex> characters = bookChars.get(lineChBook[1]);
+                    for (Vertex character : characters) {
+                        graph.addEdge(vertex, character);
+                    }
+                    characters.add(vertex);
+                    bookChars.put(lineChBook[1], characters);
                 }
 
                 i++;

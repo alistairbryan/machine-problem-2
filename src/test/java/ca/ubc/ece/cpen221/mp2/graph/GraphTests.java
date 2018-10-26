@@ -6,6 +6,7 @@ import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -54,7 +55,7 @@ public class GraphTests {
     }
 
     @Test
-    public void scannertest() {
+    public void graphfromBoggleBoard_txt() {
         Graph testgraph = new AdjacencyMatrixGraph();
         BoggleBoard board = new BoggleBoard("datasets/board-q.txt");
         Permeate.boggleGraph(board, testgraph);
@@ -65,7 +66,7 @@ public class GraphTests {
     }
 
     @Test
-    public void scannertest2() {
+    public void graphfromBoggleBoard_mn() {
         Graph testgraph = new AdjacencyMatrixGraph();
         BoggleBoard board = new BoggleBoard(20,20);
         Permeate.boggleGraph(board, testgraph);
@@ -76,7 +77,7 @@ public class GraphTests {
     }
 
     @Test
-    public void marvelCreateGraph() {
+    public void createMavelGraph() {
         Graph testgraph = new AdjacencyMatrixGraph();
         Permeate.marvelList("datasets/marvel.txt", testgraph);
         System.out.println(testgraph.getVertices());
@@ -84,6 +85,49 @@ public class GraphTests {
             System.out.println(vertex + ": " + testgraph.getNeighbors(vertex));
         }
     }
+
+    @Test
+    public void marvel_shortestDistance1() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Permeate.marvelList("datasets/marvel.txt", testgraph);
+        assertEquals(1, Algorithms.shortestDistance(testgraph,
+                new Vertex("\"24-HOUR MAN/EMMANUEL\""), new Vertex("\"FROST, CARMILLA\"")));
+    }
+
+    @Test
+    public void marvel_BFS() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Permeate.marvelList("datasets/marvel.txt", testgraph);
+        Set<List<Vertex>> lists = Algorithms.breadthFirstSearch(testgraph);
+        for (List<Vertex> list : lists) {
+            System.out.println(list.toString());
+        }
+    }
+
+    @Test
+    public void marvel_DFS() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Permeate.marvelList("datasets/marvel.txt", testgraph);
+        Set<List<Vertex>> lists = Algorithms.depthFirstSearch(testgraph);
+        for (List<Vertex> list : lists) {
+            System.out.println(list.toString());
+        }
+    }
+
+    @Test
+    public void marvelcenter() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Permeate.marvelList("datasets/marvel.txt", testgraph);
+        System.out.println(Algorithms.center(testgraph).toString());
+    }
+
+    @Test
+    public void marveldiameter() {
+        Graph testgraph = new AdjacencyMatrixGraph();
+        Permeate.marvelList("datasets/marvel.txt", testgraph);
+        System.out.println(Algorithms.diameter(testgraph));
+    }
+
 
 
 }
