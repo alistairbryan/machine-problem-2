@@ -11,9 +11,40 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 public class GraphTests {
-    @BeforeClass
-    public static void setup() {
+    private Graph g1 = new AdjacencyMatrixGraph();
+    private Vertex v0 = new Vertex("0");
+    private Vertex v7 = new Vertex("7");
 
+
+    public static void startup(Graph g) {
+
+        Vertex v0 = new Vertex("0");
+        Vertex v1 = new Vertex("1");
+        Vertex v2 = new Vertex("2");
+        Vertex v3 = new Vertex("3");
+        Vertex v4 = new Vertex("4");
+        Vertex v5 = new Vertex("5");
+        Vertex v6 = new Vertex("6");
+        Vertex v7 = new Vertex("7");
+
+        g.addVertex(v0);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        g.addVertex(v6);
+        g.addVertex(v7);
+
+        g.addEdge(v1, v5);
+        g.addEdge(v1, v0);
+        g.addEdge(v1, v2);
+        g.addEdge(v1, v6);
+        g.addEdge(v1, v2);
+        g.addEdge(v1, v4);
+        g.addEdge(v4, v3);
+        g.addEdge(v4, v7);
+        g.addEdge(v2, v6);
     }
 
     @Test
@@ -95,6 +126,13 @@ public class GraphTests {
     }
 
     @Test
+    public void shortestDistance(){
+        Graph testGraph = new AdjacencyMatrixGraph();
+        startup(testGraph);
+        System.out.println(Algorithms.shortestDistance(testGraph, v0, v7));
+    }
+
+    @Test
     public void marvel_BFS() {
         Graph testgraph = new AdjacencyMatrixGraph();
         Permeate.marvelList("datasets/marvel.txt", testgraph);
@@ -102,6 +140,22 @@ public class GraphTests {
         for (List<Vertex> list : lists) {
             System.out.println(list.toString());
         }
+    }
+
+    @Test
+    public void marvel_BFS2() {
+        Graph testGraph = new AdjacencyMatrixGraph();
+        startup(testGraph);
+        Set<List<Vertex>> lists = Algorithms.breadthFirstSearch(testGraph);
+
+        for(List<Vertex> list : lists){
+            for(Vertex v : list){
+                System.out.print(v.getLabel() + ", ");
+            }
+            System.out.println("\n");
+        }
+
+
     }
 
     @Test
@@ -114,6 +168,12 @@ public class GraphTests {
         }
     }
 
+    @Test
+    public void marvel_DFS2() {
+        Graph testGraph = new AdjacencyMatrixGraph();
+        startup(testGraph);
+        Set<List<Vertex>> lists = Algorithms.depthFirstSearch(testGraph);
+    }
     @Test
     public void marvelcenter() {
         Graph testgraph = new AdjacencyMatrixGraph();
@@ -128,6 +188,17 @@ public class GraphTests {
         System.out.println(Algorithms.diameter(testgraph));
     }
 
+    @Test
+    public void center(){
+        Graph testGraph = new AdjacencyMatrixGraph();
+        startup(testGraph);
+        System.out.println(Algorithms.center(testGraph).getLabel());
+    }
 
-
+    @Test
+    public void diameter(){
+        Graph testGraph = new AdjacencyMatrixGraph();
+        startup(testGraph);
+        System.out.println(Algorithms.diameter(testGraph));
+    }
 }

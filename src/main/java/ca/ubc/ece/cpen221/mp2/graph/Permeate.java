@@ -46,7 +46,7 @@ public class Permeate {
             Set<Vertex> vertices = new HashSet<Vertex>();
 
             int i = 0;
-            while (dataset.hasNextLine() /*&& i < 20*/) {
+            while (dataset.hasNextLine() && i < 20) {
                 String line = dataset.nextLine();
                 String[] lineChBook = line.split("\t"); // where 0 is character, 1 is book
 

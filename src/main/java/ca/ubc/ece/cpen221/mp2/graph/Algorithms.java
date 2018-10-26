@@ -52,10 +52,10 @@ public class Algorithms {
 		distances.put(a, 0);
 		workingQueue.add(a);
 
-		while (!workingQueue.isEmpty() && !bFound) {
+		while (workingVertex != null && !bFound) {
 			for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
 				if (distances.get(neighbor) == -1) {
-					distances.put(neighbor, 2 + distances.get(workingVertex));
+					distances.put(neighbor, 1 + distances.get(workingVertex));
 					if (neighbor.equals(b)) {
 						bFound = true;
 						break;
@@ -105,7 +105,7 @@ public class Algorithms {
 			workingStack.push(vStart);
 			workingVertex = vStart;
 
-			while(!workingStack.isEmpty()){
+			while(!workingStack.isEmpty() && workingVertex != null){
 				for(Vertex neighbor : graph.getNeighbors(workingVertex)){
 					if(!result.contains(neighbor)){
 						result.add(neighbor);
@@ -144,6 +144,7 @@ public class Algorithms {
 		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){
+			System.out.println("Vertex: " + vStart.getLabel());
 			result.clear();
 
 			workingQueue.add(vStart);
@@ -151,7 +152,7 @@ public class Algorithms {
 			workingVertex = vStart;
 			workingQueue.add(workingVertex);
 
-			while(!workingQueue.isEmpty()){
+			while(!workingQueue.isEmpty() || workingVertex != null){
 
 				for(Vertex neighbor : graph.getNeighbors(workingVertex)){
 					if(!result.contains(neighbor)){
@@ -161,6 +162,12 @@ public class Algorithms {
 				}
 				workingVertex = workingQueue.poll();
 			}
+			for(Vertex v : result){
+				System.out.println(v.getLabel() + ", " );
+			}
+			System.out.println("\n");
+
+			allResults.add(result);
 		}
 
 		return allResults;
@@ -194,11 +201,11 @@ public class Algorithms {
 
 				 workingQueue.add(vStart);
 				 workingVertex = vStart;
-				 while (!workingQueue.isEmpty()) {
+				 while (workingVertex != null) {
 
 					 for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
 						 if (distances.get(neighbor) == -1) {
-							 distances.put(neighbor, 2 + distances.get(workingVertex));
+							 distances.put(neighbor, 1 + distances.get(workingVertex));
 							 workingQueue.add(neighbor);
 						 }
 					 }
@@ -247,11 +254,11 @@ public class Algorithms {
 
 					workingQueue.add(vStart);
 					workingVertex = vStart;
-					while (!workingQueue.isEmpty()) {
+					while (workingVertex != null) {
 
 						for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
 							if (distances.get(neighbor) == -1) {
-								distances.put(neighbor, 2 + distances.get(workingVertex));
+								distances.put(neighbor, 1 + distances.get(workingVertex));
 								workingQueue.add(neighbor);
 							}
 						}
