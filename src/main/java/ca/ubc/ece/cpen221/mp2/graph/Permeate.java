@@ -43,26 +43,27 @@ public class Permeate {
             Scanner dataset = new Scanner(new File(filename)); /* should add each vertex, individually,
                     but also create edges based on the comic book addy. Use hash map with arraylist value for this */
 
-            Map<String, List<String>> book_chars = new HashMap<String, List<String>>();
+            Map<String, List<Vertex>> charsInBook = new HashMap<String, List<Vertex>>();
+            Map<String, Vertex> vertices = new HashMap<String, Vertex>();
 
             int i = 0;
             while (dataset.hasNextLine() && i < 10) {
                 String line = dataset.nextLine();
-                String[] ch_book = line.split("\t");
+                String[] lineChBook = line.split("\t"); // where 0 is character, 1 is book
 
-                if(!book_chars.containsKey(ch_book[1])) {
-                    book_chars.put(ch_book[1], new ArrayList<String>(Arrays.asList(ch_book[0])));
+                Vertex vertex;
+                if (vertices.containsKey(lineChBook[0])) {
+                    vertex = vertices.get(lineChBook[0]);
                 } else {
-                    //List<String> characters = book_chars.get(ch_book[1]);
-
+                    vertex = new Vertex(lineChBook[0]);
                 }
 
                 i++;
             }
 
-            for (String book : book_chars.keySet()) {
-                System.out.println(book + ": " + book_chars.get(book).toString());
-            }
+            /*for (String key : book_chars.keySet()) {
+                System.out.println(key + ": " + book_chars.get(key).toString());
+            }*/
 
 
         } catch(IOException ex) {

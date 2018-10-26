@@ -76,13 +76,13 @@ public class GraphTests {
     }
 
     @Test
-    public void locationtest() {
+    public void marvelCreateGraph() {
         Graph testgraph = new AdjacencyMatrixGraph();
         Permeate.marvelList("datasets/marvel.txt", testgraph);
         System.out.println(testgraph.getVertices());
-        /*for (Vertex vertex : testgraph.getVertices()) {
-            System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
-        }*/
+        for (Vertex vertex : testgraph.getVertices()) {
+            System.out.println(vertex + ": " + testgraph.getNeighbors(vertex));
+        }
     }
 
 
