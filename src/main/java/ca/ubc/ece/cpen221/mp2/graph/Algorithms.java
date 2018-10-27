@@ -93,29 +93,41 @@ public class Algorithms {
 	 */
 	public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
 		Set<List<Vertex>> allResults = new HashSet<>();
-		Stack<Vertex> workingStack = new Stack<>();
-		List<Vertex> neighbors = new ArrayList<>();
-		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){ //Starts at every vertex on the graph.
-			List<Vertex> result = new ArrayList<>();
+			List<Vertex> visited = new ArrayList<>();
+			Stack<Vertex> workingStack = new Stack<>();
 
-			result.add(vStart);
+			visited.add(vStart);
 			workingStack.push(vStart);
-			workingVertex = vStart;
+			Vertex position = vStart;
 
-			while(!workingStack.isEmpty() && workingVertex != null){
-				for(Vertex neighbor : graph.getNeighbors(workingVertex)){
-					if(!result.contains(neighbor)){
-						result.add(neighbor);
-						workingStack.push(neighbor);
-						break;
+			while(!workingStack.isEmpty()){
+
+				boolean noUnvisited = true;
+				for (Vertex neighbour : graph.getNeighbors(position)) {
+					if (!visited.contains(neighbour)) {
+						noUnvisited = false;
 					}
 				}
 
-				workingVertex = workingStack.pop();
+				if (noUnvisited) {
+					workingStack.pop();
+				} else {
+					for(Vertex neighbour : graph.getNeighbors(position)){
+						if(!visited.contains(neighbour)){
+							visited.add(neighbour);
+							workingStack.push(neighbour);
+							break;
+						}
+					}
+				}
+
+				if (!workingStack.empty())
+					position = workingStack.peek();
 			}
-			allResults.add(result);
+
+			allResults.add(visited);
 		}
 
 		return allResults;
