@@ -1,6 +1,7 @@
 package ca.ubc.ece.cpen221.mp2.graph;
 
 import ca.ubc.ece.cpen221.mp2.boggle.BoggleBoard;
+import ca.ubc.ece.cpen221.mp2.boggle.BogglePlayer;
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
@@ -253,7 +254,7 @@ public class GraphTests {
 
 
     @Test
-    public void DFS() { // not working
+    public void DFS() {
         Set<List<Vertex>> list1 = Algorithms.depthFirstSearch(g1);
         Set<List<Vertex>> list2 = Algorithms.depthFirstSearch(g2);
         Set<List<Vertex>> list3 = Algorithms.depthFirstSearch(g3);
@@ -314,4 +315,15 @@ public class GraphTests {
         System.out.println(Algorithms.diameter(g3));
         System.out.println(Algorithms.diameter(g4));
     }
+
+    @Test
+    public void boggle(){
+        BoggleBoard board = new BoggleBoard("datasets/board5x5.txt");
+
+        BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
+
+        System.out.println(player.getAllValidWords(board));
+
+    }
+
 }

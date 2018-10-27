@@ -80,5 +80,20 @@ public class Permeate {
             System.out.println("Error reading file.");
         }
     }
+
+    public static String[] textToStringAr(String filename) {
+        List<String> words = new ArrayList<String>();
+
+        try {
+            Scanner file = new Scanner(new File(filename));
+            while(file.hasNextLine()) {
+                words.add(file.nextLine());
+            }
+        } catch(IOException ex) {
+            System.out.println("Error finding dictionary");
+        }
+
+        return words.toArray(new String[words.size()]);
+    }
 }
 
