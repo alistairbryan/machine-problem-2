@@ -3,7 +3,6 @@ package ca.ubc.ece.cpen221.mp2.graph;
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -18,10 +17,6 @@ public class Algorithms {
 	 */
 
 	/**
-	 * This is provided as an example to indicate that this method and
-	 * other methods should be implemented here.
-	 *
-	 * You should write the specs for this and all other methods.
 	 *
 	 * @param graph, an undirected and unweighted object that implements graph. Must contain
 	 * @param a, a Vertex that must be in graph.
@@ -30,51 +25,7 @@ public class Algorithms {
 	 *         -1 if there is no path between a and b.
 	 * @throws IllegalArgumentException if a or b are not in graph
 	 */
-	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
-		Map<Vertex, Integer> distances = new HashMap<>();
-		Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
-		Vertex workingVertex = a;
-		List<Vertex> vertices = new ArrayList<>();
-		boolean bFound = false;
-
-		if (!graph.getVertices().contains(a) || !graph.getVertices().contains(b)) {
-			throw new IllegalArgumentException("One or more vertices not in graph.");
-		}
-
-		if (a.equals(b)) {
-			return 0;
-		}
-
-		for (Vertex v : graph.getVertices()) {
-			distances.put(v, -1);
-		}
-
-		distances.put(a, 0);
-		workingQueue.add(a);
-
-		while (workingVertex != null && !bFound) {
-			for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
-				if (distances.get(neighbor) == -1) {
-					distances.put(neighbor, 1 + distances.get(workingVertex));
-					if (neighbor.equals(b)) {
-						bFound = true;
-						break;
-					}
-					workingQueue.add(neighbor);
-				}
-			}
-
-			workingVertex = workingQueue.poll();
-			if (workingVertex != null && workingVertex.equals(b)) {
-				bFound = true;
-			}
-		}
-
-		if (!bFound) {
-			return -1;
-		}
-	return distances.get(b);
-	}
+	public static int shortestDistance(Graph graph, Vertex a, Vertex b) { return Algorithms.findDistances(graph,a,b).get(b); }
 
 
 	/**
@@ -154,7 +105,6 @@ public class Algorithms {
 		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){
-			//System.out.println("Vertex: " + vStart.getLabel());
 			List<Vertex> result = new ArrayList<>();
 
 			workingQueue.add(vStart);
@@ -172,11 +122,6 @@ public class Algorithms {
 				}
 				workingVertex = workingQueue.poll();
 			}
-			/*for(Vertex v : result){
-				System.out.print(v.getLabel() + ", " );
-			}
-			System.out.println("\n");*/
-
 			allResults.add(result);
 		}
 
@@ -193,46 +138,24 @@ public class Algorithms {
 	 * 			 returns the vertex with the smallest ID lexicographically.
 	 */
 	 public static Vertex center(Graph graph) {
-		 Map<Vertex,Integer> distances = new HashMap<>();
-		 Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
-		 Vertex workingVertex;
-		 List<Vertex> vertices = graph.getVertices();
-		 Vertex center = vertices.get(0);
-		 int minMax = 0;
+		 Vertex center = new Vertex("");
+		 int minEccentricity = 0;
 		 boolean isInitialized = false;
-		 int localMax;
+		 int thisEccentricity;
 
-		 for(Vertex v : vertices){
-			 distances.put(v, -1);
-		 }
-		 for(Vertex vStart : vertices) {
-		 	 if(!graph.getNeighbors(vStart).isEmpty()) {
-				 distances.put(vStart, 0);
+		 for(Vertex vStart : graph.getVertices()){
+		 	if(!graph.getNeighbors(vStart).isEmpty()){
+		 		thisEccentricity = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
 
-				 workingQueue.add(vStart);
-				 workingVertex = vStart;
-				 while (workingVertex != null) {
-
-					 for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
-						 if (distances.get(neighbor) == -1) {
-							 distances.put(neighbor, 1 + distances.get(workingVertex));
-							 workingQueue.add(neighbor);
-						 }
-					 }
-
-					 workingVertex = workingQueue.poll();
-				 }
-
-				 localMax = Collections.max(distances.values());
-
-				 if (!isInitialized) {
-					 minMax = localMax;
-					 isInitialized = true;
-				 } else if (localMax < minMax) {
-					 minMax = localMax;
-					 center = vStart;
-				 }
-			 }
+		 		if(!isInitialized){
+		 			minEccentricity = thisEccentricity;
+		 			center = vStart;
+		 			isInitialized = true;
+				}else if(thisEccentricity < minEccentricity){
+		 			minEccentricity = thisEccentricity;
+		 			center = vStart;
+				}
+			}
 		 }
 		 return center;
 	 }
@@ -247,46 +170,66 @@ public class Algorithms {
 	  * 		 no such finite distance exists.
 	  */
 		public static int diameter(Graph graph) {
-			Map<Vertex,Integer> distances = new HashMap<>();
-			Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
-			Vertex workingVertex;
 			List<Vertex> vertices = graph.getVertices();
 			int diameter = Integer.MAX_VALUE;
 			int localMax;
 			boolean finiteDiameter = false;
 
-			for(Vertex v : vertices){
-				distances.put(v, -1);
-			}
-			for(Vertex vStart : vertices) {
-				if (!graph.getNeighbors(vStart).isEmpty()) {
-					distances.put(vStart, 0);
-
-					workingQueue.add(vStart);
-					workingVertex = vStart;
-					while (workingVertex != null) {
-
-						for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
-							if (distances.get(neighbor) == -1) {
-								distances.put(neighbor, 1 + distances.get(workingVertex));
-								workingQueue.add(neighbor);
-							}
-						}
-
-						workingVertex = workingQueue.poll();
-					}
-
-					localMax = Collections.max(distances.values());
+			for(Vertex vStart : vertices){
+				if(!graph.getNeighbors(vStart).isEmpty()){
+					localMax = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
 
 					if(!finiteDiameter){
 						diameter = localMax;
 						finiteDiameter = true;
-					}
-					else if (localMax > diameter) {
+					}else if(localMax > diameter){
 						diameter = localMax;
 					}
 				}
 			}
 			return diameter;
+		}
+
+		private static Map<Vertex, Integer> findDistances(Graph graph, Vertex startVertex, Vertex breakVertex){
+			Map<Vertex, Integer> distances = new HashMap<>();
+			Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
+			Vertex workingVertex = startVertex;
+			List<Vertex> vertices = graph.getVertices();
+			boolean bFound = false;
+
+			if (!vertices.contains(startVertex) || !vertices.contains(startVertex)) {
+				throw new IllegalArgumentException("One or more vertices not in graph.");
+			}
+
+			if (startVertex.equals(breakVertex)) {
+				distances.put(breakVertex, 0);
+				return distances;
+			}
+
+			for (Vertex v : vertices) {
+				distances.put(v, -1);
+			}
+
+			distances.put(startVertex, 0);
+			workingQueue.add(startVertex);
+
+			while (workingVertex != null && !bFound) {
+				for (Vertex neighbor : graph.getNeighbors(workingVertex)) {
+					if (distances.get(neighbor) == -1) {
+						distances.put(neighbor, 1 + distances.get(workingVertex));
+						if (neighbor.equals(breakVertex)) {
+							bFound = true;
+							break;
+						}
+						workingQueue.add(neighbor);
+					}
+				}
+
+				workingVertex = workingQueue.poll();
+				if (workingVertex != null && workingVertex.equals(breakVertex)) {
+					bFound = true;
+				}
+			}
+			return distances;
 		}
 }

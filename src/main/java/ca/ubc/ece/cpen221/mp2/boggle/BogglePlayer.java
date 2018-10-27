@@ -36,9 +36,9 @@ public class BogglePlayer {
             if(containsAllLetters(letters, word)){ //Check if all letters in dictionary exist in boggle board.
 
                 //See if the 'letterNum'th letter has the 'letterNum + 1'th letter adjacent to it.
-                for(int letterNum = 0; letterNum < word.length(); letterNum++){
+                for(int letterNum = 0; letterNum < word.length()-2; letterNum++){
                     //checks if bGraph has the matrix adjacent to it
-                    if(!bGraph.getNeighbors(vertices.get(letters.indexOf(word.substring(letterNum,letterNum)))).contains(vertices.get(letters.indexOf(word.substring(letterNum + 1,letterNum + 1))))){
+                    if(!bGraph.getNeighbors(vertices.get(letters.indexOf(word.substring(letterNum,letterNum+1)))).contains(vertices.get(letters.indexOf(word.substring(letterNum + 1,letterNum + 2))))){
                         wordFound = false;
                         break;
                     }
@@ -80,8 +80,9 @@ public class BogglePlayer {
     }
 
     private boolean containsAllLetters(List<String> letters, String word){
-        for(int index = 0; index < word.length(); index++){
-            if(!letters.contains(word.substring(index, index))){
+        for(int index = 0; index < word.length()-1; index++){
+            System.out.println("Letter in word: " + word.substring(index,index+1));
+            if(!letters.contains(word.substring(index, index+1))){
                 return false;
             }
         }

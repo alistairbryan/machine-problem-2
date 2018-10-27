@@ -216,6 +216,14 @@ public class GraphTests {
         assertEquals(-1, Algorithms.shortestDistance(g4, new Vertex("h"), new Vertex("k")));
 
     }
+    /*public void findDistances(){
+        Map<Vertex, Integer> distances1 = Algorithms.findDistances(g1, new Vertex("0"), new Vertex("6"));
+        for(Vertex v : distances1.keySet()){
+            System.out.println(v.getLabel() + ": " + distances1.get(v));
+            System.out.println("\n");
+        }
+    }
+    */
 
 
     @Test
@@ -325,5 +333,6 @@ public class GraphTests {
         System.out.println(player.getAllValidWords(board));
 
     }
+
 
 }
