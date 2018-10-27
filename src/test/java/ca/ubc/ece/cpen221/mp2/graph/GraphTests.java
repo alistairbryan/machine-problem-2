@@ -11,13 +11,14 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 public class GraphTests {
-    private Graph g1 = new AdjacencyMatrixGraph();
-    private Vertex v0 = new Vertex("0");
-    private Vertex v7 = new Vertex("7");
+    private static Graph g1 = new AdjacencyMatrixGraph();
+    private static Graph g2 = new AdjacencyListGraph();
+    private static Graph g3 = new AdjacencyMatrixGraph();
+    private static Graph g4 = new AdjacencyListGraph();
 
-
-    public static void startup(Graph g) {
-
+    @BeforeClass
+    public static void startup() {
+        //Graph g1:
         Vertex v0 = new Vertex("0");
         Vertex v1 = new Vertex("1");
         Vertex v2 = new Vertex("2");
@@ -27,24 +28,99 @@ public class GraphTests {
         Vertex v6 = new Vertex("6");
         Vertex v7 = new Vertex("7");
 
-        g.addVertex(v0);
-        g.addVertex(v1);
-        g.addVertex(v2);
-        g.addVertex(v3);
-        g.addVertex(v4);
-        g.addVertex(v5);
-        g.addVertex(v6);
-        g.addVertex(v7);
+        g1.addVertex(v0);
+        g1.addVertex(v1);
+        g1.addVertex(v2);
+        g1.addVertex(v3);
+        g1.addVertex(v4);
+        g1.addVertex(v5);
+        g1.addVertex(v6);
+        g1.addVertex(v7);
 
-        g.addEdge(v1, v5);
-        g.addEdge(v1, v0);
-        g.addEdge(v1, v2);
-        g.addEdge(v1, v6);
-        g.addEdge(v1, v2);
-        g.addEdge(v1, v4);
-        g.addEdge(v4, v3);
-        g.addEdge(v4, v7);
-        g.addEdge(v2, v6);
+        g1.addEdge(v1, v5);
+        g1.addEdge(v1, v0);
+        g1.addEdge(v1, v2);
+        g1.addEdge(v1, v6);
+        g1.addEdge(v1, v2);
+        g1.addEdge(v1, v4);
+        g1.addEdge(v4, v3);
+        g1.addEdge(v4, v7);
+        g1.addEdge(v2, v6);
+
+        //Graph g2
+        List<Vertex> vertices = new ArrayList<Vertex>();
+        for (int i = 1; i <= 8; i++) {
+            Vertex vertex = new Vertex(Integer.toString(i));
+            vertices.add(vertex);
+            g2.addVertex(vertex);
+        }
+        g2.addEdge(vertices.get(0),vertices.get(7));
+        g2.addEdge(vertices.get(7),vertices.get(1));
+        g2.addEdge(vertices.get(1),vertices.get(4));
+        g2.addEdge(vertices.get(1),vertices.get(3));
+        g2.addEdge(vertices.get(1),vertices.get(2));
+        g2.addEdge(vertices.get(2),vertices.get(3));
+        g2.addEdge(vertices.get(3),vertices.get(5));
+        g2.addEdge(vertices.get(5),vertices.get(4));
+        g2.addEdge(vertices.get(6),vertices.get(4));
+
+        //Graph g3
+        vertices.clear();
+        for (int i = 0; i < 9; i++) {
+            Vertex vertex = new Vertex(Integer.toString(i));
+            vertices.add(vertex);
+            g3.addVertex(vertex);
+        }
+        g3.addEdge(vertices.get(0),vertices.get(1));
+        g3.addEdge(vertices.get(0),vertices.get(7));
+        g3.addEdge(vertices.get(1),vertices.get(2));
+        g3.addEdge(vertices.get(1),vertices.get(7));
+        g3.addEdge(vertices.get(2),vertices.get(3));
+        g3.addEdge(vertices.get(2),vertices.get(5));
+        g3.addEdge(vertices.get(2),vertices.get(8));
+        g3.addEdge(vertices.get(8),vertices.get(6));
+        g3.addEdge(vertices.get(8),vertices.get(7));
+        g3.addEdge(vertices.get(7),vertices.get(6));
+        g3.addEdge(vertices.get(3),vertices.get(4));
+        g3.addEdge(vertices.get(3),vertices.get(5));
+        g3.addEdge(vertices.get(6),vertices.get(5));
+        g3.addEdge(vertices.get(5),vertices.get(4));
+
+
+        //Graph g3
+        vertices.clear();
+        vertices.add(new Vertex("a"));
+        vertices.add(new Vertex("b"));
+        vertices.add(new Vertex("c"));
+        vertices.add(new Vertex("d"));
+        vertices.add(new Vertex("e"));
+        vertices.add(new Vertex("f"));
+        vertices.add(new Vertex("g"));
+        vertices.add(new Vertex("h"));
+        vertices.add(new Vertex("i"));
+        vertices.add(new Vertex("j"));
+        vertices.add(new Vertex("k"));
+
+        for (Vertex vertex : vertices) {
+            g4.addVertex(vertex);
+        }
+
+        g4.addEdge(new Vertex("a"), new Vertex("b"));
+        g4.addEdge(new Vertex("a"), new Vertex("c"));
+        g4.addEdge(new Vertex("b"), new Vertex("c"));
+        g4.addEdge(new Vertex("b"), new Vertex("e"));
+        g4.addEdge(new Vertex("c"), new Vertex("d"));
+        g4.addEdge(new Vertex("d"), new Vertex("f"));
+        g4.addEdge(new Vertex("d"), new Vertex("g"));
+        g4.addEdge(new Vertex("a"), new Vertex("b"));
+        g4.addEdge(new Vertex("e"), new Vertex("f"));
+        g4.addEdge(new Vertex("h"), new Vertex("i"));
+        g4.addEdge(new Vertex("i"), new Vertex("j"));
+
+
+
+
+
     }
 
     @Test
@@ -63,7 +139,7 @@ public class GraphTests {
         System.out.println(listgraph.getNeighbors(vertices.get(0)));
         System.out.println(listgraph.getNeighbors(vertices.get(1)));
 
-    }
+    } // can be removed
 
     @Test
     public void test1_AdjM() {
@@ -83,7 +159,7 @@ public class GraphTests {
         System.out.println(listgraph.getNeighbors(vertices.get(0)));
         System.out.println(listgraph.getNeighbors(vertices.get(1)));
 
-    }
+    } // can be removed
 
     @Test
     public void graphfromBoggleBoard_txt() {
@@ -94,7 +170,7 @@ public class GraphTests {
         for (Vertex vertex : testgraph.getVertices()) {
             System.out.println(vertex + ":  " + testgraph.getNeighbors(vertex));
         }*/
-    }
+    } // can likely be removed
 
     @Test
     public void graphfromBoggleBoard_mn() {
@@ -111,10 +187,7 @@ public class GraphTests {
     public void createMavelGraph() {
         Graph testgraph = new AdjacencyMatrixGraph();
         Permeate.marvelList("datasets/marvel.txt", testgraph);
-        System.out.println(testgraph.getVertices());
-        for (Vertex vertex : testgraph.getVertices()) {
-            System.out.println(vertex + ": " + testgraph.getNeighbors(vertex));
-        }
+        System.out.println("Marvel graph created");
     }
 
     @Test
@@ -127,53 +200,91 @@ public class GraphTests {
 
     @Test
     public void shortestDistance(){
-        Graph testGraph = new AdjacencyMatrixGraph();
-        startup(testGraph);
-        System.out.println(Algorithms.shortestDistance(testGraph, v0, v7));
+        assertEquals(3, Algorithms.shortestDistance(g1, new Vertex("0"), new Vertex("7")));
+        assertEquals(2, Algorithms.shortestDistance(g2, new Vertex("7"), new Vertex("6")));
+        assertEquals(4, Algorithms.shortestDistance(g2, new Vertex("7"), new Vertex("1")));
+        assertEquals(2, Algorithms.shortestDistance(g2, new Vertex("7"), new Vertex("6")));
+        assertEquals(2, Algorithms.shortestDistance(g2, new Vertex("5"), new Vertex("3")));
+        assertEquals(0, Algorithms.shortestDistance(g2, new Vertex("8"), new Vertex("8")));
+        assertEquals(4, Algorithms.shortestDistance(g3, new Vertex("0"), new Vertex("4")));
+        assertEquals(2, Algorithms.shortestDistance(g3, new Vertex("0"), new Vertex("8")));
+        assertEquals(3, Algorithms.shortestDistance(g3, new Vertex("7"), new Vertex("4")));
+        assertEquals(3, Algorithms.shortestDistance(g4, new Vertex("a"), new Vertex("f")));
+        assertEquals(2, Algorithms.shortestDistance(g4, new Vertex("h"), new Vertex("j")));
+        assertEquals(-1, Algorithms.shortestDistance(g4, new Vertex("a"), new Vertex("i")));
+        assertEquals(-1, Algorithms.shortestDistance(g4, new Vertex("h"), new Vertex("k")));
+
     }
 
+
     @Test
-    public void marvel_BFS() {
-        Graph testgraph = new AdjacencyMatrixGraph();
-        Permeate.marvelList("datasets/marvel.txt", testgraph);
-        Set<List<Vertex>> lists = Algorithms.breadthFirstSearch(testgraph);
-        for (List<Vertex> list : lists) {
+    public void BFS_1() {
+        Set<List<Vertex>> list1 = Algorithms.breadthFirstSearch(g1);
+        Set<List<Vertex>> list2 = Algorithms.breadthFirstSearch(g2);
+        Set<List<Vertex>> list3 = Algorithms.breadthFirstSearch(g3);
+        Set<List<Vertex>> list4 = Algorithms.breadthFirstSearch(g4);
+
+
+        System.out.println("Graph g1: ");
+        for(List<Vertex> list : list1){
             System.out.println(list.toString());
-        }
-    }
-
-    @Test
-    public void marvel_BFS2() {
-        Graph testGraph = new AdjacencyMatrixGraph();
-        startup(testGraph);
-        Set<List<Vertex>> lists = Algorithms.breadthFirstSearch(testGraph);
-
-        for(List<Vertex> list : lists){
-            for(Vertex v : list){
-                System.out.print(v.getLabel() + ", ");
-            }
             System.out.println("\n");
         }
 
+        System.out.println("Graph g2: ");
+        for(List<Vertex> list : list2){
+            System.out.println(list.toString());
+            System.out.println("\n");
+        }
+
+        System.out.println("Graph g3: ");
+        for(List<Vertex> list : list3){
+            System.out.println(list.toString());
+            System.out.println("\n");
+        }
+
+        System.out.println("Graph g4: ");
+        for(List<Vertex> list : list4){
+            System.out.println(list.toString());
+            System.out.println("\n");
+        }
 
     }
 
+
     @Test
-    public void marvel_DFS() {
-        Graph testgraph = new AdjacencyMatrixGraph();
-        Permeate.marvelList("datasets/marvel.txt", testgraph);
-        Set<List<Vertex>> lists = Algorithms.depthFirstSearch(testgraph);
-        for (List<Vertex> list : lists) {
+    public void DFS() { // not working
+        Set<List<Vertex>> list1 = Algorithms.depthFirstSearch(g1);
+        Set<List<Vertex>> list2 = Algorithms.depthFirstSearch(g2);
+        Set<List<Vertex>> list3 = Algorithms.depthFirstSearch(g3);
+        Set<List<Vertex>> list4 = Algorithms.depthFirstSearch(g4);
+
+
+        System.out.println("Graph g1: ");
+        for(List<Vertex> list : list1){
             System.out.println(list.toString());
+            System.out.println("\n");
+        }
+
+        System.out.println("Graph g2: ");
+        for(List<Vertex> list : list2){
+            System.out.println(list.toString());
+            System.out.println("\n");
+        }
+
+        System.out.println("Graph g3: ");
+        for(List<Vertex> list : list3){
+            System.out.println(list.toString());
+            System.out.println("\n");
+        }
+
+        System.out.println("Graph g4: ");
+        for(List<Vertex> list : list4){
+            System.out.println(list.toString());
+            System.out.println("\n");
         }
     }
 
-    @Test
-    public void marvel_DFS2() {
-        Graph testGraph = new AdjacencyMatrixGraph();
-        startup(testGraph);
-        Set<List<Vertex>> lists = Algorithms.depthFirstSearch(testGraph);
-    }
     @Test
     public void marvelcenter() {
         Graph testgraph = new AdjacencyMatrixGraph();
@@ -190,15 +301,17 @@ public class GraphTests {
 
     @Test
     public void center(){
-        Graph testGraph = new AdjacencyMatrixGraph();
-        startup(testGraph);
-        System.out.println(Algorithms.center(testGraph).getLabel());
+        System.out.println(Algorithms.center(g1).getLabel());
+        System.out.println(Algorithms.center(g2).getLabel());
+        System.out.println(Algorithms.center(g3).getLabel());
+        System.out.println(Algorithms.center(g4).getLabel());
     }
 
     @Test
     public void diameter(){
-        Graph testGraph = new AdjacencyMatrixGraph();
-        startup(testGraph);
-        System.out.println(Algorithms.diameter(testGraph));
+        System.out.println(Algorithms.diameter(g1));
+        System.out.println(Algorithms.diameter(g2));
+        System.out.println(Algorithms.diameter(g3));
+        System.out.println(Algorithms.diameter(g4));
     }
 }

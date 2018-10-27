@@ -23,7 +23,7 @@ public class Algorithms {
 	 *
 	 * You should write the specs for this and all other methods.
 	 *
-	 * @param graph, an undirected and unweighted object that implementats graph. Must contain
+	 * @param graph, an undirected and unweighted object that implements graph. Must contain
 	 * @param a, a Vertex that must be in graph.
 	 * @param b, a Vertex that must be in graph.
 	 * @return the shortest distance between a and b, taking each edge to be length 1,
@@ -65,7 +65,7 @@ public class Algorithms {
 			}
 
 			workingVertex = workingQueue.poll();
-			if (workingVertex.equals(b)) {
+			if (workingVertex != null && workingVertex.equals(b)) {
 				bFound = true;
 			}
 		}
@@ -93,13 +93,12 @@ public class Algorithms {
 	 */
 	public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
 		Set<List<Vertex>> allResults = new HashSet<>();
-		List<Vertex> result = new ArrayList<>();
 		Stack<Vertex> workingStack = new Stack<>();
 		List<Vertex> neighbors = new ArrayList<>();
 		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){ //Starts at every vertex on the graph.
-			result.clear();
+			List<Vertex> result = new ArrayList<>();
 
 			result.add(vStart);
 			workingStack.push(vStart);
@@ -138,14 +137,13 @@ public class Algorithms {
 	 *         Each List corresponds to a different starting Vertex.
 	 */
 	public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
-		Set<List<Vertex>> allResults = new HashSet<>();
-		List<Vertex> result = new ArrayList<>();
+		Set<List<Vertex>> allResults = new HashSet<List<Vertex>>();
 		Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
 		Vertex workingVertex;
 
 		for(Vertex vStart : graph.getVertices()){
-			System.out.println("Vertex: " + vStart.getLabel());
-			result.clear();
+			//System.out.println("Vertex: " + vStart.getLabel());
+			List<Vertex> result = new ArrayList<>();
 
 			workingQueue.add(vStart);
 			result.add(vStart);
@@ -162,10 +160,10 @@ public class Algorithms {
 				}
 				workingVertex = workingQueue.poll();
 			}
-			for(Vertex v : result){
-				System.out.println(v.getLabel() + ", " );
+			/*for(Vertex v : result){
+				System.out.print(v.getLabel() + ", " );
 			}
-			System.out.println("\n");
+			System.out.println("\n");*/
 
 			allResults.add(result);
 		}
