@@ -338,6 +338,23 @@ public class GraphTests {
     }
 
     @Test
+    public void center_marvel() {
+        Graph marvelGraph = new AdjacencyListGraph();
+        Permeate.marvelList("datasets/marvel.txt", marvelGraph);
+        assertEquals("\"3-D MAN/CHARLES CHAN\"", Algorithms.center(marvelGraph).toString());
+    }
+
+    @Test
+    public void diameter_marvel() {
+        Graph marvelGraph = new AdjacencyListGraph();
+        Permeate.marvelList("datasets/marvel.txt", marvelGraph);
+        assertEquals(5, Algorithms.diameter(marvelGraph));
+    }
+
+
+    //5x5 Board, 25x25 board, and 5x25 was made by Gabriel Robinson Leith and is used here with
+    // permission to compare system outputs.
+    @Test
     public void boggle(){
         BoggleBoard board = new BoggleBoard("datasets/board5x5.txt");
 

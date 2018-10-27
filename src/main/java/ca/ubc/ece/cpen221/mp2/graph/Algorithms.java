@@ -2,6 +2,7 @@ package ca.ubc.ece.cpen221.mp2.graph;
 
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
+import ca.ubc.ece.cpen221.utils.In;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -138,26 +139,43 @@ public class Algorithms {
 	 * 			 returns the vertex with the smallest ID lexicographically.
 	 */
 	 public static Vertex center(Graph graph) {
-		 Vertex center = new Vertex("");
-		 int minEccentricity = 0;
+		 Vertex center = graph.getVertices().get(0);
 		 boolean isInitialized = false;
-		 int thisEccentricity;
 
-		 for(Vertex vStart : graph.getVertices()){
+		 int minEccentricity = Integer.MAX_VALUE;
+		 int minConnectedSize = Integer.MAX_VALUE;
+		 //Map<Vertex, Integer> connectedSize = new HashMap<>();
+
+		 for(Vertex vStart : graph.getVertices()){ //remember vertices are already sorted low to high
+
 		 	if(!graph.getNeighbors(vStart).isEmpty()){
-		 		thisEccentricity = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
+		 		Map<Vertex, Integer> distances = Algorithms.findDistances(graph, vStart, null);
+		 		int thisEccentricity = Collections.max(distances.values());
 
 		 		if(!isInitialized){
 		 			minEccentricity = thisEccentricity;
 		 			center = vStart;
 		 			isInitialized = true;
-				}else if(thisEccentricity < minEccentricity){
+		 			minConnectedSize = getConnectedSize(distances);
+				} else if (thisEccentricity < minEccentricity && getConnectedSize(distances) >= minConnectedSize){
 		 			minEccentricity = thisEccentricity;
 		 			center = vStart;
 				}
 			}
 		 }
 		 return center;
+	 }
+
+	 private static int getConnectedSize(Map<Vertex,Integer> distances) {
+
+
+	 	int count = 0;
+	 	for (Integer value : distances.values()) {
+	 		if (value != -1) {
+	 			count++;
+			}
+		}
+		return count;
 	 }
 
 	 /**

@@ -45,8 +45,8 @@ public class Permeate {
             Map<String, Set<Vertex>> bookChars = new HashMap<String, Set<Vertex>>();
             Set<Vertex> vertices = new HashSet<Vertex>();
 
-            int i = 0;
-            while (dataset.hasNextLine() /*&& i < 20*/) {
+            //int i = 0;
+            while (dataset.hasNextLine() /*&& i < 10000*/) {
                 String line = dataset.nextLine();
                 String[] lineChBook = line.split("\t"); // where 0 is character, 1 is book
 
@@ -68,7 +68,7 @@ public class Permeate {
                     bookChars.put(lineChBook[1], characters);
                 }
 
-                i++;
+                //i++;
             }
 
             /*for (String key : book_chars.keySet()) {
