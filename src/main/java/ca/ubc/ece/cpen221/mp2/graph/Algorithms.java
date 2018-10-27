@@ -176,17 +176,20 @@ public class Algorithms {
 			boolean finiteDiameter = false;
 
 			for(Vertex vStart : vertices){
-				if(!graph.getNeighbors(vStart).isEmpty()){
+
+				if (!graph.getNeighbors(vStart).isEmpty()) {
 					localMax = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
 
-					if(!finiteDiameter){
+					if (!finiteDiameter) {
 						diameter = localMax;
 						finiteDiameter = true;
-					}else if(localMax > diameter){
+					} else if (localMax > diameter){
 						diameter = localMax;
 					}
 				}
+
 			}
+
 			return diameter;
 		}
 

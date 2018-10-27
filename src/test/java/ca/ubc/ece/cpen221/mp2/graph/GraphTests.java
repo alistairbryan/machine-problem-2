@@ -16,6 +16,8 @@ public class GraphTests {
     private static Graph g2 = new AdjacencyListGraph();
     private static Graph g3 = new AdjacencyMatrixGraph();
     private static Graph g4 = new AdjacencyListGraph();
+    private static Graph edgeless = new AdjacencyMatrixGraph();
+    private static Graph w1edge = new AdjacencyListGraph();
 
     @BeforeClass
     public static void startup() {
@@ -118,10 +120,18 @@ public class GraphTests {
         g4.addEdge(new Vertex("h"), new Vertex("i"));
         g4.addEdge(new Vertex("i"), new Vertex("j"));
 
+        //Edgeless graph:
+        edgeless.addVertex(new Vertex("1"));
+        edgeless.addVertex(new Vertex("2"));
+        edgeless.addVertex(new Vertex("3"));
+        edgeless.addVertex(new Vertex("4"));
 
-
-
-
+        //w1edge
+        w1edge.addVertex(new Vertex("1"));
+        w1edge.addVertex(new Vertex("2"));
+        w1edge.addVertex(new Vertex("3"));
+        w1edge.addVertex(new Vertex("4"));
+        w1edge.addEdge(new Vertex("4"), new Vertex("3"));
     }
 
     @Test
@@ -314,6 +324,7 @@ public class GraphTests {
         System.out.println(Algorithms.center(g2).getLabel());
         System.out.println(Algorithms.center(g3).getLabel());
         System.out.println(Algorithms.center(g4).getLabel());
+
     }
 
     @Test
@@ -322,6 +333,8 @@ public class GraphTests {
         System.out.println(Algorithms.diameter(g2));
         System.out.println(Algorithms.diameter(g3));
         System.out.println(Algorithms.diameter(g4));
+        System.out.println(Algorithms.diameter(edgeless));
+        System.out.println(Algorithms.diameter(w1edge));
     }
 
     @Test
