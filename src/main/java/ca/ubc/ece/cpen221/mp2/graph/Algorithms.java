@@ -2,7 +2,6 @@ package ca.ubc.ece.cpen221.mp2.graph;
 
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
-import ca.ubc.ece.cpen221.utils.In;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
