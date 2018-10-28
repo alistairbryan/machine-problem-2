@@ -38,9 +38,9 @@ public class BogglePlayer {
         }
 
         for(String word : dictionary){
-            if(word.length() > 2 && containsAllLetters(letters, word)){ //Check if all letters in dictionary exist in boggle board.
+            if(word.length() > 2 && containsAllLettersNotQI(letters, word)){ //Check if all letters in dictionary exist in boggle board.
                 for(Vertex startV : bGraph.getVertices()) {
-                    if (wordInBoard(word, bGraph, startV)) {
+                    if (wordInBoard(word, bGraph, startV, new HashSet<Vertex>())) {
                         validWords.add(word);
                     }
                 }
@@ -55,7 +55,7 @@ public class BogglePlayer {
      *               Requires that the board is not null.
      * @return the highest score one can obtain from finding dictionary words on the given BoggleBoard.
      */
-    private boolean wordInBoard(String word, Graph bGraph, Vertex currentV) {
+    private boolean wordInBoard(String word, Graph bGraph, Vertex currentV, Set<Vertex> traversed) {
         if (word.length() == 1 || word.equals("QU")) { //end of line
             if (word.equals(currentV.getLabel())) {
                 return true;
@@ -65,10 +65,17 @@ public class BogglePlayer {
             }
 
         } else { // recursive call
+
+            Set<Vertex> beenTo = new HashSet<Vertex>();
+            beenTo.add(currentV);
+            for (Vertex v : traversed) {
+                beenTo.add(v);
+            }
+
             if (word.substring(0,1).equals(currentV.getLabel())) {
                 int cutLength = word.charAt(0) == 'Q' && word.length() > 2 ? 2 : 1;
                 for (Vertex neighbor : bGraph.getNeighbors(currentV)) {
-                    if (wordInBoard(word.substring(cutLength), bGraph, neighbor)) {
+                    if (!beenTo.contains(neighbor) && wordInBoard(word.substring(cutLength), bGraph, neighbor, beenTo)) {
                         return true;
                     }
                 }
@@ -116,12 +123,21 @@ public class BogglePlayer {
      *              Requires that the word contains no spaces or punctuation. Just uppercase letters from the English alphabet.
      * @return whether the word can be written using characters (with duplicates) from the letters array.
      */
-    private boolean containsAllLetters(List<String> letters, String word){
+    private boolean containsAllLettersNotQI(List<String> letters, String word){
         for(int index = 0; index < word.length()-1; index++){
             if(!letters.contains(word.substring(index, index+1))){
                 return false;
             }
         }
+
+        for(int i = 0; i < word.length()-1; i++) {
+            if (word.charAt(i) == 'Q') {
+                if (word.charAt(i+1) != 'U') {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 }
