@@ -79,6 +79,7 @@ public class Permeate {
                     bookChars.put(lineChBook[1], characters);
                 }
             }
+
             dataset.close();
 
         } catch(IOException ex) {
