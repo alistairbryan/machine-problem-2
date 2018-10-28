@@ -145,6 +145,9 @@ public class GraphTests {
         listgraph.addEdge(vertices.get(1), vertices.get(2));
         listgraph.addEdge(vertices.get(1), vertices.get(3));
 
+        System.out.println(listgraph.edgeExists(vertices.get(0),vertices.get(1)));
+        System.out.println(listgraph.edgeExists(vertices.get(0),vertices.get(2)));
+
         System.out.println(listgraph.getVertices());
 
         System.out.println(listgraph.getNeighbors(vertices.get(0)));
@@ -166,6 +169,9 @@ public class GraphTests {
 
         System.out.println("Adjacency Matrix: ");
         System.out.println(listgraph.getVertices());
+
+        System.out.println(listgraph.edgeExists(vertices.get(0),vertices.get(1)));
+        System.out.println(listgraph.edgeExists(vertices.get(0),vertices.get(2)));
 
         System.out.println(listgraph.getNeighbors(vertices.get(0)));
         System.out.println(listgraph.getNeighbors(vertices.get(1)));
@@ -224,6 +230,10 @@ public class GraphTests {
         assertEquals(2, Algorithms.shortestDistance(g4, new Vertex("h"), new Vertex("j")));
         assertEquals(-1, Algorithms.shortestDistance(g4, new Vertex("a"), new Vertex("i")));
         assertEquals(-1, Algorithms.shortestDistance(g4, new Vertex("h"), new Vertex("k")));
+        try{
+            assertEquals(-1, Algorithms.shortestDistance(g4, new Vertex("5 billion"), new Vertex("k")));
+        }catch(IllegalArgumentException ex){
+        }
 
     }
     /*public void findDistances(){
@@ -339,6 +349,7 @@ public class GraphTests {
     }
 
 
+
     //5x5 Board, 25x25 board, and 5x25 was made by Gabriel Robinson-Leith and is used here with
     // permission to compare system outputs.
     @Test
@@ -352,6 +363,17 @@ public class GraphTests {
         }
     }
 
+    @Test
+    public void permeate(){
+        String[] testString = Permeate.textToStringAr("ThisFile");
+    }
+
+    @Test
+    public void permeate2(){
+        Graph testGraph = new AdjacencyListGraph();
+
+        Permeate.marvelList("Google", testGraph);
+    }
 
 
 }
