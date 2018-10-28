@@ -18,6 +18,13 @@ public class AdjacencyMatrixGraph implements Graph, Comparator{
     private Map<Vertex, Integer> matrixMap = new HashMap<>();
     private int vertexCount = 0;
 
+    //Abstraction function is:
+    //  vertex = hashmap<Vertex, Set<Vertex>>, where vertex is the input vertex and Set<Vertex> contains the
+    //      vertices for which vertex is connected by an edge.
+
+    //Rep invariant is
+    //  no two vertices are the same (defined by the vertex.equals() method)
+
     public AdjacencyMatrixGraph() { }
 
     public AdjacencyMatrixGraph(List<Vertex> inputList) {
