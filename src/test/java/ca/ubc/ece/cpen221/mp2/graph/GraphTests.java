@@ -352,6 +352,17 @@ public class GraphTests {
         }
     }
 
+    @Test
+    public void boggle2(){
+        BoggleBoard board = new BoggleBoard("datasets/board3x3.txt");
+
+        BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
+
+        for (String word : player.getAllValidWords(board)) {
+            System.out.println(word);
+        }
+    }
+
 
 
 }
