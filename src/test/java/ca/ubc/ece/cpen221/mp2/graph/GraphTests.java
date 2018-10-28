@@ -304,19 +304,6 @@ public class GraphTests {
         }
     }
 
-    @Test
-    public void marvelcenter() {
-        Graph testgraph = new AdjacencyMatrixGraph();
-        Permeate.marvelList("datasets/marvel.txt", testgraph);
-        System.out.println(Algorithms.center(testgraph).toString());
-    }
-
-    @Test
-    public void marveldiameter() {
-        Graph testgraph = new AdjacencyMatrixGraph();
-        Permeate.marvelList("datasets/marvel.txt", testgraph);
-        System.out.println(Algorithms.diameter(testgraph));
-    }
 
     @Test
     public void center(){
@@ -360,9 +347,11 @@ public class GraphTests {
 
         BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
 
-        System.out.println(player.getAllValidWords(board));
-
+        for (String word : player.getAllValidWords(board)) {
+            System.out.println(word);
+        }
     }
+
 
 
 }
