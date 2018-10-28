@@ -57,8 +57,7 @@ public class Permeate {
             Map<String, Set<Vertex>> bookChars = new HashMap<String, Set<Vertex>>();
             Set<Vertex> vertices = new HashSet<Vertex>();
 
-            //int i = 0;
-            while (dataset.hasNextLine() /*&& i < 10000*/) {
+            while (dataset.hasNextLine()) {
                 String line = dataset.nextLine();
                 String[] lineChBook = line.split("\t"); // where 0 is character, 1 is book
 
@@ -79,14 +78,8 @@ public class Permeate {
                     characters.add(vertex);
                     bookChars.put(lineChBook[1], characters);
                 }
-
-                //i++;
             }
-
-            /*for (String key : book_chars.keySet()) {
-                System.out.println(key + ": " + book_chars.get(key).toString());
-            }*/
-
+            dataset.close();
 
         } catch(IOException ex) {
             System.out.println("Error reading file.");
@@ -107,6 +100,7 @@ public class Permeate {
             while(file.hasNextLine()) {
                 words.add(file.nextLine());
             }
+            file.close();
         } catch(IOException ex) {
             System.out.println("Error finding dictionary");
         }
