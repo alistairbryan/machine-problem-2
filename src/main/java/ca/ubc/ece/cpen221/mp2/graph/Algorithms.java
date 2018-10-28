@@ -18,6 +18,7 @@ public class Algorithms {
 
 	/**
 	 *
+	 *
 	 * @param graph, an undirected and unweighted object that implements graph. Must contain
 	 * @param a, a Vertex that must be in graph.
 	 * @param b, a Vertex that must be in graph.

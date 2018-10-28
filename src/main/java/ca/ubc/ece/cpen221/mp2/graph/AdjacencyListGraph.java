@@ -12,16 +12,20 @@ import java.util.*;
  *
  ******************************************************************************/
 
+
 public class AdjacencyListGraph implements Graph, Comparator {
 
     Map<Vertex, Set<Vertex>> adjacencyList = new HashMap<Vertex, Set<Vertex>>();
 
-    //Abstraction function is:
-    //  vertex = hashmap<Vertex, Set<Vertex>>, where vertex is the input vertex and Set<Vertex> contains the
-    //      vertices for which vertex is connected by an edge.
+    /*
+     * Rep Invariant:
+     *   Let a and b be Vertices in a graph. a.getNeighbours.contains(b) == true, if and only if b.getNeighbours.contains(a) == true.
+     *
+     * Abstraction Function:
+     *   Represents a set of Vertices contained in the graph and which vertices are connected to each other.
+     *
+     */
 
-    //Rep invariant is
-    //  no two vertices are the same (defined by the vertex.equals() method)
 
     public AdjacencyListGraph() { }
 
@@ -64,7 +68,7 @@ public class AdjacencyListGraph implements Graph, Comparator {
      * Precondition: v1 and v2 are vertices in the graph
      * </p>
      * <p>
-     * Postcondition: return true if an edge from v1 connects to v2
+     * Postcondition: return true iff an edge from v1 connects to v2
      * </p>
      */
     public boolean edgeExists(Vertex v1, Vertex v2) {
