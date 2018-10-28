@@ -376,5 +376,18 @@ public class GraphTests {
         Permeate.marvelList("Google", testGraph);
     }
 
+    @Test
+    public void boggle5x25(){
+        BoggleBoard board = new BoggleBoard("datasets/board5x25.txt");
+
+        BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
+
+        for (String word : player.getAllValidWords(board)) {
+            System.out.println(word);
+        }
+
+        assertEquals(1323,player.getMaximumScore(board));
+    }
+
 
 }
