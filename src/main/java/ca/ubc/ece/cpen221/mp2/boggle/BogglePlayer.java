@@ -44,6 +44,12 @@ public class BogglePlayer {
         return validWords;
     }
 
+
+    /**
+     * @param board, a BoggleBoard.
+     *               Requires that the board is not null.
+     * @return the highest score one can obtain from finding dictionary words on the given BoggleBoard.
+     */
     private boolean wordInBoard(String word, Graph bGraph, Vertex currentV) {
         if (word.length() == 1 || word.equals("QU")) { //end of line
             if (word.equals(currentV.getLabel())) {
@@ -76,7 +82,11 @@ public class BogglePlayer {
         return maxScore;
     }
 
-
+    /**
+     * @param word, a word.
+     *               Requires that the word is not null.
+     * @return the score for which that word is eligible.
+     */
     public int scoreOf(String word){
         int length = word.length();
         if(length < 3){
@@ -94,6 +104,13 @@ public class BogglePlayer {
         }
     }
 
+    /**
+     * @param letters, a list of letters.
+     *               Requires that the list contains single letters or Qu. No entries may be null.
+     * @param word, a word.
+     *              Requires that the word contains no spaces or punctuation. Just uppercase letters from the English alphabet.
+     * @return whether the word can be written using characters (with duplicates) from the letters array.
+     */
     private boolean containsAllLetters(List<String> letters, String word){
         for(int index = 0; index < word.length()-1; index++){
             if(!letters.contains(word.substring(index, index+1))){
@@ -102,6 +119,5 @@ public class BogglePlayer {
         }
         return true;
     }
-
 }
 

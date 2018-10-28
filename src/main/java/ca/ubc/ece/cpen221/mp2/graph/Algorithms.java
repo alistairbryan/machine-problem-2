@@ -27,7 +27,6 @@ public class Algorithms {
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) { return Algorithms.findDistances(graph,a,b).get(b); }
 
-
 	/**
 	 * Perform a complete depth first search of the given
 	 * graph. Start with the search at each vertex of the
@@ -38,7 +37,8 @@ public class Algorithms {
 	 * returned set should correspond to the number of graph
 	 * vertices).
 	 *
-	 * @param graph, the graph through which we wish to search. Must contain at least one vertex
+	 * @param graph, the graph through which we wish to search.
+     *               Requires that the graph contains at least one Vertex
 	 * @return a Set of Lists, with each List indicating the chronological order at which vertices are reached.
 	 *         Each List corresponds to a different starting Vertex.
 	 */
@@ -95,7 +95,8 @@ public class Algorithms {
 	 * returned set should correspond to the number of graph
 	 * vertices).
 	 *
-	 * @param graph, the graph through which we wish to search. Must contain at least one vertex
+	 * @param graph, the graph through which we wish to search.
+     *               Requires that the graph contain at least one Vertex.
 	 * @return a Set of Lists, with each List indicating the chronological order at which the vertices are reached.
 	 *         Each List corresponds to a different starting Vertex.
 	 */
@@ -133,48 +134,32 @@ public class Algorithms {
 	 * A vertex's eccentricity is the defined as the greatest distance between that vertex and any other in the graph
 	 * and to be infinite if the vertex is not connected to any other.
 	 *
-	 * @param graph, the graph. Must have at least one connection between vertices.
-	 * @returns Vertex, the vertex with the lowest eccentricity. If multiple vertices have the eccentricity,
+	 * @param graph, a graph for which you wish to find the center.
+     *               Requires the graph contain at least one Vertex and that there is at least one connection between vertices.
+	 * @returns Vertex, the vertex, that is part of the largest connected component of the graph, with the lowest eccentricity. If multiple vertices have the eccentricity,
 	 * 			 returns the vertex with the smallest ID lexicographically.
 	 */
 	 public static Vertex center(Graph graph) {
-		 Vertex center = graph.getVertices().get(0);
+		 Vertex center = new Vertex("");
+		 int minEccentricity = 0;
 		 boolean isInitialized = false;
+		 int thisEccentricity;
 
-		 int minEccentricity = Integer.MAX_VALUE;
-		 int minConnectedSize = Integer.MAX_VALUE;
-		 //Map<Vertex, Integer> connectedSize = new HashMap<>();
-
-		 for(Vertex vStart : graph.getVertices()){ //remember vertices are already sorted low to high
-
+		 for(Vertex vStart : graph.getVertices()){
 		 	if(!graph.getNeighbors(vStart).isEmpty()){
-		 		Map<Vertex, Integer> distances = Algorithms.findDistances(graph, vStart, null);
-		 		int thisEccentricity = Collections.max(distances.values());
+		 		thisEccentricity = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
 
 		 		if(!isInitialized){
 		 			minEccentricity = thisEccentricity;
 		 			center = vStart;
 		 			isInitialized = true;
-		 			minConnectedSize = getConnectedSize(distances);
-				} else if (thisEccentricity < minEccentricity && getConnectedSize(distances) >= minConnectedSize){
+				}else if(thisEccentricity < minEccentricity){
 		 			minEccentricity = thisEccentricity;
 		 			center = vStart;
 				}
 			}
 		 }
 		 return center;
-	 }
-
-	 private static int getConnectedSize(Map<Vertex,Integer> distances) {
-
-
-	 	int count = 0;
-	 	for (Integer value : distances.values()) {
-	 		if (value != -1) {
-	 			count++;
-			}
-		}
-		return count;
 	 }
 
 	 /**
@@ -187,29 +172,37 @@ public class Algorithms {
 	  * 		 no such finite distance exists.
 	  */
 		public static int diameter(Graph graph) {
+			Map<Vertex, Integer> distances = new HashMap<>();
 			List<Vertex> vertices = graph.getVertices();
 			int diameter = Integer.MAX_VALUE;
 			int localMax;
 			boolean finiteDiameter = false;
 
-			for(Vertex vStart : vertices){
-
-				if (!graph.getNeighbors(vStart).isEmpty()) {
+			for (Vertex vStart : vertices){
+				if (!graph.getNeighbors(vStart).isEmpty()){
 					localMax = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
 
-					if (!finiteDiameter) {
+					if(!finiteDiameter){
 						diameter = localMax;
 						finiteDiameter = true;
-					} else if (localMax > diameter){
+					}else if(localMax > diameter){
 						diameter = localMax;
 					}
 				}
-
 			}
-
 			return diameter;
 		}
 
+    /**
+     *
+     * @param graph, an undirected and unweighted object that implements graph. Must contain
+     * @param startVertex, the start Vertex. All distances are given relative to it.
+     *                         Requires that startVertex is in the graph.
+     * @param breakVertex, once the search reaches this Vertex, the distances map is returned.
+     *                     To carry out a full search, pass null.
+     * @return A Map<Vertex, Integer> that maps vertices within the graph to their start Vertex.
+     * @throws IllegalArgumentException if startVertex is not in graph.
+     */
 		private static Map<Vertex, Integer> findDistances(Graph graph, Vertex startVertex, Vertex breakVertex){
 			Map<Vertex, Integer> distances = new HashMap<>();
 			Queue<Vertex> workingQueue = new LinkedBlockingQueue<>();
@@ -217,7 +210,7 @@ public class Algorithms {
 			List<Vertex> vertices = graph.getVertices();
 			boolean bFound = false;
 
-			if (!vertices.contains(startVertex) || !vertices.contains(startVertex)) {
+			if (!vertices.contains(startVertex)) {
 				throw new IllegalArgumentException("One or more vertices not in graph.");
 			}
 

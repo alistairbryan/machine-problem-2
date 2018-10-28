@@ -339,7 +339,7 @@ public class GraphTests {
     }
 
 
-    //5x5 Board, 25x25 board, and 5x25 was made by Gabriel Robinson Leith and is used here with
+    //5x5 Board, 25x25 board, and 5x25 was made by Gabriel Robinson-Leith and is used here with
     // permission to compare system outputs.
     @Test
     public void boggle(){

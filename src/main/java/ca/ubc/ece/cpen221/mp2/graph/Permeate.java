@@ -10,7 +10,12 @@ import java.util.*;
 
 public class Permeate {
     // Fills graphs with what they need to be filled with.
-
+    /**
+     * @param board, a board object.
+     *               Requires that the board is not null.
+     * @param graph, a graph that you wish to populate with vertices from the board.
+     *               Requires that the graph object contains no vertices and is not null.
+     */
     public static void boggleGraph(BoggleBoard board, Graph graph) {
         int rows = board.rows();
         int cols = board.cols();
@@ -37,7 +42,14 @@ public class Permeate {
 
 
     }
-
+    /**
+     * @param filename, the name of the file that you wish to read convert to a graph.
+     *                  Requires that filename points to a file that is of type .txt and is in the dataset directory
+     *                  Requires that filename points to a file which contains text of the format: ""Label"    "Content"
+     *                  Requires that filename points to a file that has each Vertex description on its own line, and that there are no empty lines.
+     * @param graph, the graph that you wish to populate with the above described vertices.
+     *               Requires that graph contains no vertices and that it is not null.
+     */
     public static void marvelList(String filename, Graph graph) {
         try {
             Scanner dataset = new Scanner(new File(filename));
@@ -81,6 +93,12 @@ public class Permeate {
         }
     }
 
+/**
+ * @param filename, the name of the file that you wish to read convert to a graph.
+ *                  Requires that filename points to a file that is of type .txt and is in the dataset directory
+ *                  Requires that filename points to a file that has no empty lines.
+ * @return A String array with the contents of each line in filename populating a unique index in the order at which they were found in the file at filename.
+ */
     public static String[] textToStringAr(String filename) {
         List<String> words = new ArrayList<String>();
 
