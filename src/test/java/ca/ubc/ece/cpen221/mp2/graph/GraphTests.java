@@ -236,15 +236,6 @@ public class GraphTests {
         }
 
     }
-    /*public void findDistances(){
-        Map<Vertex, Integer> distances1 = Algorithms.findDistances(g1, new Vertex("0"), new Vertex("6"));
-        for(Vertex v : distances1.keySet()){
-            System.out.println(v.getLabel() + ": " + distances1.get(v));
-            System.out.println("\n");
-        }
-    }
-    */
-
 
     @Test
     public void BFS_1() {
@@ -334,25 +325,21 @@ public class GraphTests {
         System.out.println(Algorithms.diameter(w1edge));
     }
 
-    /*@Test
+    @Test
     public void center_marvel() {
         Graph marvelGraph = new AdjacencyListGraph();
         Permeate.marvelList("datasets/marvel.txt", marvelGraph);
         assertEquals("\"3-D MAN/CHARLES CHAN\"", Algorithms.center(marvelGraph).toString());
     }
-    */
 
-    /*@Test
+    @Test
     public void diameter_marvel() {
         Graph marvelGraph = new AdjacencyListGraph();
         Permeate.marvelList("datasets/marvel.txt", marvelGraph);
         assertEquals(5, Algorithms.diameter(marvelGraph));
     }
-    */
 
-
-
-    //5x5 Board, 25x25 board, and 5x25 was made by Gabriel Robinson-Leith and is used here with
+    //5x5 Board, 25x25 board, and 5x25 were made by Gabriel Robinson-Leith and is used here with
     // permission to compare system outputs.
     @Test
     public void boggle(){
@@ -377,20 +364,5 @@ public class GraphTests {
 
         Permeate.marvelList("Google", testGraph);
     }
-
-    /*@Test
-    public void boggle5x25(){
-        BoggleBoard board = new BoggleBoard("datasets/board5x25.txt");
-
-        BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
-
-        for (String word : player.getAllValidWords(board)) {
-            System.out.println(word);
-        }
-
-        assertEquals(1323,player.getMaximumScore(board));
-    }
-    */
-
 
 }
