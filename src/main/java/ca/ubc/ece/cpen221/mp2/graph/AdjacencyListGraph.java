@@ -19,10 +19,14 @@ public class AdjacencyListGraph implements Graph, Comparator {
 
     /*
      * Rep Invariant:
-     *   Let a and b be Vertices in a graph. a.getNeighbours.contains(b) == true, if and only if b.getNeighbours.contains(a) == true.
+     *   Let a and b be any Vertices in a graph. a.getNeighbours.contains(b) == true, if and only if
+     *   b.getNeighbours.contains(a) == true.
+     *   All vertices are unique.
+     *   All edges have distance 1.
      *
      * Abstraction Function:
-     *   Represents a set of Vertices contained in the graph and which vertices are connected to each other.
+     *   Represents all vertices in the graph as a HashMap of a given Vertex to its index. These indices
+     *   correspond to the index in an List that contains a List of all adjacent Vertices.
      *
      */
 
