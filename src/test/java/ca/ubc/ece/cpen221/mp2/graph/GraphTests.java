@@ -334,19 +334,21 @@ public class GraphTests {
         System.out.println(Algorithms.diameter(w1edge));
     }
 
-    @Test
+    /*@Test
     public void center_marvel() {
         Graph marvelGraph = new AdjacencyListGraph();
         Permeate.marvelList("datasets/marvel.txt", marvelGraph);
         assertEquals("\"3-D MAN/CHARLES CHAN\"", Algorithms.center(marvelGraph).toString());
     }
+    */
 
-    @Test
+    /*@Test
     public void diameter_marvel() {
         Graph marvelGraph = new AdjacencyListGraph();
         Permeate.marvelList("datasets/marvel.txt", marvelGraph);
         assertEquals(5, Algorithms.diameter(marvelGraph));
     }
+    */
 
 
 
@@ -376,7 +378,7 @@ public class GraphTests {
         Permeate.marvelList("Google", testGraph);
     }
 
-    @Test
+    /*@Test
     public void boggle5x25(){
         BoggleBoard board = new BoggleBoard("datasets/board5x25.txt");
 
@@ -388,6 +390,7 @@ public class GraphTests {
 
         assertEquals(1323,player.getMaximumScore(board));
     }
+    */
 
 
 }
