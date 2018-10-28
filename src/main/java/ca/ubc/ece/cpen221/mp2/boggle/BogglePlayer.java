@@ -18,6 +18,11 @@ public class BogglePlayer {
         this.dictionary = dictionary;
     }
 
+    /**
+     * @param board, a BoggleBoard
+     *              Requires board is not null.
+     * @return a Set containing all words in dictionary that can be created from board's vertices and by following the rules of Boggle.
+     */
     public Set<String> getAllValidWords(BoggleBoard board) {
         Set<String> validWords = new TreeSet<>();
         Graph bGraph = new AdjacencyMatrixGraph();
