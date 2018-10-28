@@ -2,7 +2,6 @@ package ca.ubc.ece.cpen221.mp2.boggle;
 
 import ca.ubc.ece.cpen221.mp2.core.Graph;
 import ca.ubc.ece.cpen221.mp2.core.Vertex;
-import ca.ubc.ece.cpen221.mp2.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp2.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp2.graph.Permeate;
 
@@ -26,70 +25,27 @@ public class BogglePlayer {
      */
     public Set<String> getAllValidWords(BoggleBoard board) {
         Set<String> validWords = new TreeSet<>();
-        Graph bGraph = new AdjacencyListGraph();
+        Graph bGraph = new AdjacencyMatrixGraph();
         Permeate.boggleGraph(board, bGraph);
-        List<Vertex> vertices = bGraph.getVertices();
-        List<String> letters = new ArrayList<>();
-        boolean wordFound;
 
-        for (Vertex v : vertices){
+        List<String> letters = new ArrayList<>();
+
+        for(Vertex v : bGraph.getVertices()){
             letters.add(v.getLabel());
         }
+        if (letters.contains("Q")) {
+            letters.add("U");
+        }
 
-        for (String word : dictionary){
-            wordFound = true;
-            if (containsAllLetters(letters, word)){ //Check if all letters in dictionary exist in boggle board.
-
-                //See if the 'letterNum'th letter has the 'letterNum + 1'th letter adjacent to it.
-                for (int letterNum = 0; letterNum < word.length()-1; letterNum++){
-                    //checks if bGraph has the matrix adjacent to it
-                    String thisLetter;
-                    String nextLetter;
-
-                    if (letterNum != word.length() - 2) {
-                        thisLetter = word.substring(letterNum, letterNum + 1);
-                    }else{
-                        thisLetter = word.substring(letterNum);
+        for(String word : dictionary){
+            if(word.length() > 2 && containsAllLetters(letters, word)){ //Check if all letters in dictionary exist in boggle board.
+                for(Vertex startV : bGraph.getVertices()) {
+                    if (wordInBoard(word, bGraph, startV)) {
+                        validWords.add(word);
                     }
-
-
-                    if (!thisLetter.equalsIgnoreCase("Q")) {
-                        nextLetter = word.substring(letterNum + 1, letterNum + 2);
-                    }else {
-                        nextLetter = word.substring(letterNum + 2, letterNum + 3);
-                    }
-
-                    if(thisLetter.equalsIgnoreCase("E")) {
-                        System.out.println("thisLetter: " + thisLetter);
-                        System.out.println("nextLetter: " + nextLetter);
-                    }
-
-                    int indexThisLetter = word.indexOf(thisLetter);
-                    int indexNextLetter = word.indexOf(nextLetter);
-
-                    while (indexThisLetter >= 0){
-                        wordFound = true;
-
-                        if (!bGraph.getNeighbors(vertices.get(indexThisLetter)).contains(vertices.get(indexNextLetter))) {
-                            wordFound = false;
-                        }
-
-                        indexThisLetter = word.indexOf(thisLetter, indexThisLetter + 1);
-                        if(thisLetter.equalsIgnoreCase("E")) {
-                            System.out.println("indexThisLetter: " + indexThisLetter);
-                        }
-                    }
-                    System.out.println("------");
-                    if(!wordFound){
-                        break;
-                    }
-                }
-                if(wordFound) {
-                    validWords.add(word);
                 }
             }
         }
-
         return validWords;
     }
 
@@ -99,6 +55,29 @@ public class BogglePlayer {
      *               Requires that the board is not null.
      * @return the highest score one can obtain from finding dictionary words on the given BoggleBoard.
      */
+    private boolean wordInBoard(String word, Graph bGraph, Vertex currentV) {
+        if (word.length() == 1 || word.equals("QU")) { //end of line
+            if (word.equals(currentV.getLabel())) {
+                return true;
+            }
+            if (word.equals("QU") && currentV.getLabel().equals("Q")) {
+                return true;
+            }
+
+        } else { // recursive call
+            if (word.substring(0,1).equals(currentV.getLabel())) {
+                int cutLength = word.charAt(0) == 'Q' && word.length() > 2 ? 2 : 1;
+                for (Vertex neighbor : bGraph.getNeighbors(currentV)) {
+                    if (wordInBoard(word.substring(cutLength), bGraph, neighbor)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public int getMaximumScore(BoggleBoard board){
         Set<String> words = getAllValidWords(board);
         int maxScore = 0;
