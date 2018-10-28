@@ -195,7 +195,6 @@ public class Algorithms {
 	  * 		 no such finite distance exists.
 	  */
 		public static int diameter(Graph graph) {
-			Map<Vertex, Integer> distances = new HashMap<>();
 			List<Vertex> vertices = graph.getVertices();
 			int diameter = Integer.MAX_VALUE;
 			int localMax;

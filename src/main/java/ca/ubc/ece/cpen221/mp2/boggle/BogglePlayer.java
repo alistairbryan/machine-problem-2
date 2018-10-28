@@ -51,8 +51,12 @@ public class BogglePlayer {
 
 
     /**
-     * @param board, a BoggleBoard.
-     *               Requires that the board is not null.
+     * @param word, word that you are trying to find on board.
+     *              Requires that word is not null.
+     * @param bGraph, graph that represents the boggle board.
+     *                Require that bGraph is not null.
+     * @param currentV, current Vertex from which you are adjacent Vertices
+     * @param traversed, Set of Vertices you have already been to.
      * @return the highest score one can obtain from finding dictionary words on the given BoggleBoard.
      */
     private boolean wordInBoard(String word, Graph bGraph, Vertex currentV, Set<Vertex> traversed) {
@@ -85,6 +89,11 @@ public class BogglePlayer {
         return false;
     }
 
+    /**
+     * @param board, a BoggleBoard.
+     *               Requires that the board is not null.
+     * @return the highest score one can obtain from finding dictionary words on the given BoggleBoard.
+     */
     public int getMaximumScore(BoggleBoard board){
         Set<String> words = getAllValidWords(board);
         int maxScore = 0;
@@ -96,7 +105,7 @@ public class BogglePlayer {
 
     /**
      * @param word, a word.
-     *               Requires that the word is not null.
+     *              Requires that the word is not null.
      * @return the score for which that word is eligible.
      */
     public int scoreOf(String word){
