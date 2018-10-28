@@ -350,18 +350,29 @@ public class GraphTests {
         for (String word : player.getAllValidWords(board)) {
             System.out.println(word);
         }
+        assertEquals(2911,player.getMaximumScore(board));
     }
 
     @Test
-    public void boggle2(){
-        BoggleBoard board = new BoggleBoard("datasets/board3x3.txt");
+    public void boggle5x25(){
+        BoggleBoard board = new BoggleBoard("datasets/board5x25.txt");
 
         BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
 
         for (String word : player.getAllValidWords(board)) {
             System.out.println(word);
         }
+
+        assertEquals(1323,player.getMaximumScore(board));
     }
+
+    /*@Test
+    public void boggle25x25(){
+        BoggleBoard board = new BoggleBoard("datasets/board25x25.txt");
+        BogglePlayer player = new BogglePlayer(Permeate.textToStringAr("datasets/dictionary-yawl.txt"));
+
+        assertEquals(7575,player.getMaximumScore(board));
+    }*/
 
 
 

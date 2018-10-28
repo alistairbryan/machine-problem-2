@@ -137,31 +137,53 @@ public class Algorithms {
 	 *
 	 * @param graph, a graph for which you wish to find the center.
      *               Requires the graph contain at least one Vertex and that there is at least one connection between vertices.
-	 * @returns Vertex, the vertex, that is part of the largest connected component of the graph, with the lowest eccentricity. If multiple vertices have the eccentricity,
-	 * 			 returns the vertex with the smallest ID lexicographically.
+	 * @returns Vertex that is part of the largest connected component of the graph, with the lowest
+	 * 			eccentricity. If multiple vertices have the eccentricity,
+	 * 			returns the vertex with the smallest ID lexicographically.
 	 */
-	 public static Vertex center(Graph graph) {
-		 Vertex center = new Vertex("");
-		 int minEccentricity = 0;
-		 boolean isInitialized = false;
-		 int thisEccentricity;
+	public static Vertex center(Graph graph) {
+		Vertex center = graph.getVertices().get(0);
+		boolean isInitialized = false;
 
-		 for(Vertex vStart : graph.getVertices()){
-		 	if(!graph.getNeighbors(vStart).isEmpty()){
-		 		thisEccentricity = Collections.max(Algorithms.findDistances(graph, vStart, null).values());
+		int minEccentricity = Integer.MAX_VALUE;
+		int minConnectedSize = Integer.MAX_VALUE;
+		//Map<Vertex, Integer> connectedSize = new HashMap<>();
 
-		 		if(!isInitialized){
-		 			minEccentricity = thisEccentricity;
-		 			center = vStart;
-		 			isInitialized = true;
-				}else if(thisEccentricity < minEccentricity){
-		 			minEccentricity = thisEccentricity;
-		 			center = vStart;
+		for(Vertex vStart : graph.getVertices()){ //remember vertices are already sorted low to high
+
+			if(!graph.getNeighbors(vStart).isEmpty()){
+				Map<Vertex, Integer> distances = Algorithms.findDistances(graph, vStart, null);
+				int thisEccentricity = Collections.max(distances.values());
+
+				if(!isInitialized){
+					minEccentricity = thisEccentricity;
+					center = vStart;
+					isInitialized = true;
+					minConnectedSize = getConnectedSize(distances);
+				} else if (thisEccentricity < minEccentricity && getConnectedSize(distances) >= minConnectedSize){
+					minEccentricity = thisEccentricity;
+					center = vStart;
 				}
 			}
-		 }
-		 return center;
-	 }
+		}
+		return center;
+	}
+
+	/**
+	 *
+	 * @param distances a Map that contains every other vertex and its position. If the two vertices are disconnected,
+	 *                  the integer value is -1
+	 * @return the size of the connected portion of the graph that the vertex belongs to.
+	 */
+	private static int getConnectedSize(Map<Vertex,Integer> distances) {
+		int count = 0;
+		for (Integer value : distances.values()) {
+			if (value != -1) {
+				count++;
+			}
+		}
+		return count;
+	}
 
 	 /**
 	  * Determines the diameter of a graph, with the diameter defined as the maximum finite distance between
